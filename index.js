@@ -30,7 +30,7 @@ module.exports = {
         match: /(\W|^|["])require(\W|["]|$)/g,
         replacement: '$1equireray$2'
       }, {
-        match: /(\W|^|["])dojoRequire(\W|["]|$)/g,
+        match: /(\W|^|["])__dojoRequire(\W|["]|$)/g,
         replacement: '$1require$2'
       }]
     };
