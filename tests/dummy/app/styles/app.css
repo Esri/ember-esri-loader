@@ -1,2 +1,15 @@
+/* bootstrap styles */
+@import url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css');
+
 /* esri styles */
 @import url('https://js.arcgis.com/3.19/esri/css/esri.css');
+
+/* app styles */
+body {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.navbar {
+  margin-bottom: 20px;
+}

@@ -2,8 +2,10 @@ import Ember from 'ember';
 
 export default Ember.Service.extend({
 
+  // TODO: make this a CP? how?
   // has JSAPI been loaded
   isLoaded () {
+    // NOTE: this function name will be replaced at build time
     return !!window.__dojoRequire;
   },
 

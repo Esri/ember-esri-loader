@@ -1,3 +1,22 @@
-{{#link-to 'application'}}Home{{/link-to}}
-{{#link-to 'map'}}Map{{/link-to}}
-{{outlet}}
+<div class="container">
+
+  <!-- navbar -->
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <span class="navbar-brand">ember-esri-loader</span>
+      </div>
+      <ul class="nav navbar-nav">
+        <li>{{#link-to 'application'}}Home{{/link-to}}</li>
+        <li>{{#link-to 'map'}}Map{{/link-to}}</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://github.com/tomwayson/ember-esri-loader" target="_blank">GitHub</a></li>
+      </ul>
+    </div><!--/.container-fluid -->
+  </nav>
+
+  <!-- page content -->
+  {{outlet}}
+
+</div> <!-- /container -->
