@@ -70,7 +70,7 @@ Before you can use the ArcGIS API in your app, you'll need to load the styles, f
 
 ```css
 /* esri styles */
-@import url('https://js.arcgis.com/3.19/esri/css/esri.css');
+@import url('https://js.arcgis.com/3.20/esri/css/esri.css');
 ```
 
 ## How It Works
