@@ -22,7 +22,7 @@ export default Ember.Service.extend({
       // this._loadPromise = Ember.RSVP.resolve({ previouslyLoaded: true });
       // return this._loadPromise;
       // otherwise reject w/ error saying that a different version has been loaded
-      return Ember.RSVP.reject(new Error('The ArcGIS API for JavaScript is already loaded.'))
+      return Ember.RSVP.reject(new Error('The ArcGIS API for JavaScript is already loaded.'));
     }
     // otherwise create a promise that will resolve when the JSAPI is loaded
     this._loadPromise = new Ember.RSVP.Promise((resolve, reject) => {
