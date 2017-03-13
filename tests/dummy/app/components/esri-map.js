@@ -18,8 +18,16 @@ export default Ember.Component.extend({
         zoom: 11
       });
       // add a layer
-      var vtlayer = new VectorTileLayer("https://www.arcgis.com/sharing/rest/content/items/bf79e422e9454565ae0cbe9553cf6471/resources/styles/root.json");
+      var vtlayer = new VectorTileLayer('https://www.arcgis.com/sharing/rest/content/items/bf79e422e9454565ae0cbe9553cf6471/resources/styles/root.json');
       this._map.addLayer(vtlayer);
     });
+  },
+
+  // destroy the map before this component is removed from the DOM
+  willDestroyElement () {
+    if (this._map) {
+      this._map.destroy();
+      delete this._map;
+    }
   }
 });
