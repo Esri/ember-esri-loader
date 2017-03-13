@@ -5,13 +5,15 @@
   "keywords": [
     "ember-addon"
   ],
-  "license": "MIT",
-  "author": "",
+  "license": "Apache-2.0",
+  "author": "Tom Wayson <tom@tomwayson.com> (tomwayson.com)",
   "directories": {
-    "doc": "doc",
     "test": "tests"
   },
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArcGIS/ember-esri-loader.git"
+  },
   "scripts": {
     "build": "ember build",
     "start": "ember server",
@@ -52,5 +54,10 @@
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
-  }
+  },
+  "main": "index.js",
+  "bugs": {
+    "url": "https://github.com/ArcGIS/ember-esri-loader/issues"
+  },
+  "homepage": "https://github.com/ArcGIS/ember-esri-loader#readme"
 }
