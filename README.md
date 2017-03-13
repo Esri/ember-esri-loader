@@ -64,6 +64,15 @@ willDestroyElement () {
 }
 ```
 
+### Loading Styles
+
+Before you can use the ArcGIS API in your app, you'll need to load the styles, for example by adding the following to app/styles/app.css:
+
+```css
+/* esri styles */
+@import url('https://js.arcgis.com/3.19/esri/css/esri.css');
+```
+
 ## How It Works
 
 This addon is an implementation of the ["Dedicated Loader Module" pattern](http://tomwayson.com/2016/11/27/using-the-arcgis-api-for-javascript-in-applications-built-with-webpack/) for [Ember](http://emberjs.com/). It is a mashup of the ideas from [angular2-esri-loader](https://github.com/tomwayson/angular2-esri-loader) and [ember-cli-amd](https://github.com/Esri/ember-cli-amd). Like angular2-esri-loader, it creates a service that exposes functions that wrap calls to load the ArcGIS API and it's modules in promises. However, in order to avoid global namespace collisions with [loader.js](https://github.com/ember-cli/loader.js)'s `require()` and `define()` this addon also has to <del>steal</del> borrow from ember-cli-amd the code that finds and replaces those terms with their pig-latin counterparts in the build output. However unlike ember-cli-amd, it does **not** inject the ArcGIS for JavaScript in the page, nor does it use the ArcGIS API's Dojo loader to load the entire app.
