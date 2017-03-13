@@ -6,8 +6,6 @@ var stringReplace = require('broccoli-string-replace');
 module.exports = {
   name: 'ember-esri-loader',
 
-  // if (!this.app.options.amd)
-  //   return tree;
   postprocessTree: function (type, tree) {
     if (type !== 'all')
       return tree;
@@ -30,6 +28,10 @@ module.exports = {
         match: /(\W|^|["])require(\W|["]|$)/g,
         replacement: '$1equireray$2'
       }, {
+        // TODO: probably a better way to achieve this, but for now
+        // we use a special token "__dojoRequire" for the places in the
+        // esri-loader service where we want to allow nested require statements
+        // and this regExp will replace that token with calls to require()
         match: /(\W|^|["])__dojoRequire(\W|["]|$)/g,
         replacement: '$1require$2'
       }]

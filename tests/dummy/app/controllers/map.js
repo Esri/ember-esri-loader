@@ -11,7 +11,7 @@ export default Ember.Controller.extend({
     const esriLoader = this.get('esriLoader');
     this.set('jsapiLoaded', esriLoader.isLoaded());
     // lazy load the JSAPI
-    esriLoader.load({ url: '//js.arcgis.com/3.20' }).then(() => {
+    esriLoader.load({ url: 'https://js.arcgis.com/3.20' }).then(() => {
       this.set('jsapiLoaded', esriLoader.isLoaded());
     }, err => {
       // TODO: better way of showing error

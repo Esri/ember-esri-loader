@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "description": "The default blueprint for ember-cli addons.",
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "Ember",
+    "ArcGIS",
+    "Esri"
   ],
   "license": "Apache-2.0",
   "author": "Tom Wayson <tom@tomwayson.com> (tomwayson.com)",
