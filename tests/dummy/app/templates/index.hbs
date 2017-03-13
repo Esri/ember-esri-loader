@@ -1,9 +1,14 @@
 <h2>Lazy Loading the ArcGIS API for JavaScript in an Ember Application</h2>
+<p style="margin-top: 1em;">The ArcGIS API for JavaScript
+  is: <strong>{{unless jsapiLoaded "NOT"}} loaded</strong>.</p>
 <p>If you navigated directly to this route, then the <a href="https://developers.arcgis.com/javascript/" target="_blank">ArcGIS API for JavaScript</a>
   will not be loaded on the page until you navigate to the {{#link-to 'map'}}map
   route{{/link-to}}. This helps keep the initial load time down on non-map routes.</p>
 <p>
+  If you transitioned here from the {{#link-to 'map'}}map{{/link-to}} route, then the ArcGIS API for JavaScript will already be loaded.
+</p>
+<p>
   {{#link-to 'map' class="btn btn-lg btn-primary"}}Load the map{{/link-to}}
   <a href="https://developers.arcgis.com/javascript/" target="_blank" class="btn btn-lg btn-default">Learn More on GitHub</a>
 </p>
-<p>Find out more about how the ember-esri-loader addon works <a href="https://github.com/tomwayson/ember-esri-loader" target="_blank">on GitHub</a>.</p>
+<p>Find out more about how the ember-esri-loader addon works <a href="https://github.com/ArcGIS/ember-esri-loader" target="_blank">on GitHub</a>.</p>
