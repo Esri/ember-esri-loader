@@ -4,6 +4,7 @@ export default Ember.Controller.extend({
 
   esriLoader: Ember.inject.service('esri-loader'),
 
+  // this will be called only the first time the map route is loaded
   init () {
     this._super(...arguments);
     // set a property to show the loaded state of the JSAPI
