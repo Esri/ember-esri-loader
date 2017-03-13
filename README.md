@@ -1,10 +1,12 @@
 # ember-esri-loader
 
-This README outlines the details of collaborating on this Ember addon.
+An Ember addon to allow lazy loading the ArcGIS API for JavaScript in Ember applications.
+
+[View it in action](http://ember-esri-loader.surge.sh/).
 
 ## Installation
 
-* `git clone <repository-url>` this repository
+* `git clone https://github.com/ArcGIS/ember-esri-loader.git` this repository
 * `cd ember-esri-loader`
 * `npm install`
 * `bower install`
