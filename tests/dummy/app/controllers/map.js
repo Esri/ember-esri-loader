@@ -10,8 +10,8 @@ export default Ember.Controller.extend({
     // set a property to show the loaded state of the JSAPI
     const esriLoader = this.get('esriLoader');
     this.set('jsapiLoaded', esriLoader.isLoaded());
-    // lazy load the JSAPI
-    esriLoader.load({ url: 'https://js.arcgis.com/3.20' }).then(() => {
+    // lazy load the latest (4.x) version of the JSAPI
+    esriLoader.load().then(() => {
       this.set('jsapiLoaded', esriLoader.isLoaded());
     }, err => {
       // TODO: better way of showing error

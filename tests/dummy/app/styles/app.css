@@ -2,7 +2,7 @@
 @import url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css');
 
 /* esri styles */
-@import url('https://js.arcgis.com/3.20/esri/css/esri.css');
+@import url('https://js.arcgis.com/4.3/esri/css/main.css');
 
 /* app styles */
 body {
@@ -12,4 +12,9 @@ body {
 
 .navbar {
   margin-bottom: 20px;
+}
+
+.esri-view {
+  height: 400px;
+  width: 100%;
 }
