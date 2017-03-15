@@ -14,9 +14,27 @@ ember install ember-esri-loader
 
 ## Usage
 
+### Pre-loading the ArcGIS API for JavaScript
+
+If you have good reason to believe that the user is going to transition to a map route, you may want to start pre-loading the ArcGIS API as soon as possible w/o blocking template rendering. You can add the following to the application route:
+
+```js
+esriLoader: Ember.inject.service('esri-loader'),
+
+renderTemplate: function () {
+  // render the template as normal
+  this._super(...arguments);
+  // then preload the JSAPI
+  // NOTE: to use the latest 4.x release don't pass any arguments to load()
+  this.get('esriLoader').load().catch(err => {
+    // do something with the error
+  });
+}
+```
+
 ### Lazy Loading the ArcGIS API for JavaScript
 
-To lazy load the ArcGIS API for JavaScript the first time a user goes to the map's route, add the following to the route's controller:
+Alternatively you can lazy load the ArcGIS API for JavaScript the first time a user goes to the map's route. One way would be to add the following to the route's controller:
 
 ```js
 esriLoader: Ember.inject.service('esri-loader'),
@@ -26,14 +44,17 @@ init () {
   this._super(...arguments);
   // lazy load the JSAPI
   const esriLoader = this.get('esriLoader');
-  // NOTE: to use the latest 4.x release don't pass any arguments to load()
-  esriLoader.load({ url: 'https://js.arcgis.com/3.20' }).catch(err => {
+  // NOTE: to use a version other than the latest  4.x release
+  // pass the url in the options argument to load()
+  esriLoader.load({ url: 'https://js.arcgis.com/3.20compact' }).catch(err => {
     // do something with the error
   });
 }
 ```
 
-Then in a component in that route, you can create a map like this:
+### Loading Modules from the ArcGIS API for JavaScript
+
+Once you've loaded the API (typically in a route or controller), you can then load modules. Here's an example of how you could load and use the 3.x `Map` and `VectorTileLayer` classes in a component to create a map:
 
 ```js
 esriLoader: Ember.inject.service('esri-loader'),
@@ -66,7 +87,7 @@ willDestroyElement () {
 
 ### Loading Styles
 
-Before you can use the ArcGIS API in your app, you'll need to load the styles, for example by adding the following to app/styles/app.css:
+Before you can use the ArcGIS API in your app, you'll need to load the styles, for example by adding something like the following to app/styles/app.css:
 
 ```css
 /* esri styles */
