@@ -11,7 +11,7 @@ export default Ember.Service.extend({
 
   // inject a script tag pointing to the JSAPI in the page
   // and return a promise once it's loaded
-  load (options) {
+  load (options = {}) {
     // if already loading or loaded, return the existing promise
     if (this._loadPromise) {
       return this._loadPromise;
