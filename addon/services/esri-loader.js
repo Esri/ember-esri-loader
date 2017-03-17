@@ -32,15 +32,19 @@ export default Ember.Service.extend({
       script.src = options.url || 'https://js.arcgis.com/4.3';
       // once the script is loaded...
       script.onload = () => {
-        // notify any watchers of isLoaded copmuted property
-        this.notifyPropertyChange('isLoaded');
-        // let the caller know that the API has been successfully loaded
-        // TODO: would there be something more useful to return here?
-        resolve({ success: true });
+        Ember.run(() => {
+          // notify any watchers of isLoaded copmuted property
+          this.notifyPropertyChange('isLoaded');
+          // let the caller know that the API has been successfully loaded
+          // TODO: would there be something more useful to return here?
+          resolve({ success: true });
+        });
       };
       // reject on script error
       script.onerror = () => {
-        reject(new Error(`Error while attempting to load ${script.src}`));
+        Ember.run(() => {
+          reject(new Error(`Error while attempting to load ${script.src}`));
+        });
       };
       // load the script
       document.body.appendChild(script);
