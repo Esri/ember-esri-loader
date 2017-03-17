@@ -70,7 +70,6 @@ export default Ember.Service.extend({
   // require the modules and return a pomise that reolves them as an array
   _loadModules (moduleNames) {
     return new Ember.RSVP.Promise(resolve => {
-      // TODO: validate modules as an array of names?
       // NOTE: this function name will be replaced at build time
       window.__dojoRequire(moduleNames, (...modules) => {
         resolve(modules);
