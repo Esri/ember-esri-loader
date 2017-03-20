@@ -57,9 +57,7 @@ export default Ember.Service.extend({
     } else {
       if (this._loadPromise) {
         // load modules once finished loadng the JSAPI
-        return this._loadPromise.then(() => {
-          return this._loadModules(moduleNames);
-        });
+        return this._loadPromise.then(Ember.run.bind(this, this._loadModules, moduleNames));
       } else {
         // not loaded or loading
         return Ember.RSVP.reject(new Error('The ArcGIS API for JavaScript has not been loaded. You must first call esriLoader.load()'));
