@@ -1,8 +1,6 @@
 import Ember from 'ember';
-import layout from '../templates/components/esri-map';
 
 export default Ember.Component.extend({
-  layout,
 
   esriLoader: Ember.inject.service('esri-loader'),
 
@@ -15,7 +13,7 @@ export default Ember.Component.extend({
       // load the webmap from a portal item
       const webmap = new WebMap({
         portalItem: { // autocasts as new PortalItem()
-          id: "f2e9b762544945f390ca4ac3671cfa72"
+          id: this.itemId
         }
       });
       // Set the WebMap instance to the map property in a MapView.
