@@ -14,14 +14,40 @@
 /* jshint node: true */
 'use strict';
 var path = require('path');
+var Funnel = require('broccoli-funnel');
+var MergeTrees = require('broccoli-merge-trees');
 var stringReplace = require('broccoli-string-replace');
 
 module.exports = {
   name: 'ember-esri-loader',
 
+  // copy UMD build of esri-loader to public tree
+  // as a peer to vendor and app scripts
+  treeForPublic(publicTree) {
+    var esriLoaderTree = new Funnel(path.dirname(require.resolve('esri-loader/esri-loader.js')), {
+      files: ['esri-loader.js'],
+      destDir: 'assets'
+    });
+    if (!publicTree) {
+      return esriLoaderTree;
+    }
+    return new MergeTrees([publicTree, esriLoaderTree]);
+  },
+
+  // inject esri-loader script tag instead of importing into vendor.js
+  // so that it is not subject to the find and replace below
+  contentFor (type, config) {
+    // TODO: or test-body-footer?
+    if (type === 'body-footer') {
+      return `<script src="${config.rootURL}assets/esri-loader.js"></script>`;
+    }
+  },
+
+  // find and replace "require" and "define" in the vendor and app scripts
   postprocessTree: function (type, tree) {
-    if (type !== 'all')
+    if (type !== 'all') {
       return tree;
+    }
 
     var outputPaths = this.app.options.outputPaths;
 
@@ -41,6 +67,7 @@ module.exports = {
         match: /(\W|^|["])require(\W|["]|$)/g,
         replacement: '$1equireray$2'
       }, {
+        // TODO: remove this once we have tests configured to spy on esriLoader
         // TODO: probably a better way to achieve this, but for now
         // we use a special token "__dojoRequire" for the places in the
         // esri-loader service where we want to allow nested require statements
