@@ -10,8 +10,8 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-/* global esriLoader: false */
 import Ember from 'ember';
+import esriLoader from 'esri-loader';
 
 export default Ember.Service.extend({
 

@@ -21,6 +21,12 @@ var stringReplace = require('broccoli-string-replace');
 module.exports = {
   name: 'ember-esri-loader',
 
+  // support "import esriLoader from 'esri-loader';" syntax
+  included() {
+    this._super.included.apply(this, arguments);
+    this.import('vendor/shims/esri-loader.js');
+  },
+
   // copy UMD build of esri-loader to public tree
   // as a peer to vendor and app scripts
   treeForPublic(publicTree) {
