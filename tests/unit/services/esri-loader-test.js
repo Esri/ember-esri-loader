@@ -26,10 +26,7 @@ test('when has not yet been loaded', function(assert) {
   });
 });
 
-// NOTE: hoping to be able to use esri-loader library, see:
-// https://github.com/ArcGIS/ember-esri-loader/issues/13
-// in which case most of the tests below should be covered in that repo
-
+// TODO: move the logic of tests to the esri-loader library
 test('load', function(assert) {
   const done = assert.async();
   assert.expect(2);
@@ -39,7 +36,7 @@ test('load', function(assert) {
   });
   service.load();
   assert.ok(stub.calledOnce, 'appendChild was called once');
-  assert.equal(stub.getCall(0).args[0].src, 'https://js.arcgis.com/4.3');
+  assert.equal(stub.getCall(0).args[0].src, 'https://js.arcgis.com/4.3/');
   done();
 });
 
