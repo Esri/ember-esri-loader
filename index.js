@@ -16,6 +16,7 @@
 var path = require('path');
 var Funnel = require('broccoli-funnel');
 var MergeTrees = require('broccoli-merge-trees');
+var uglify = require('broccoli-uglify-sourcemap');
 var stringReplace = require('broccoli-string-replace');
 
 module.exports = {
@@ -30,10 +31,14 @@ module.exports = {
   // copy UMD build of esri-loader to public tree
   // as a peer to vendor and app scripts
   treeForPublic(publicTree) {
+    var env = this.app.env;
     var esriLoaderTree = new Funnel(path.dirname(require.resolve('esri-loader/esri-loader.js')), {
       files: ['esri-loader.js'],
       destDir: 'assets'
     });
+    if (env === 'production') {
+      esriLoaderTree = uglify(esriLoaderTree);
+    }
     if (!publicTree) {
       return esriLoaderTree;
     }
