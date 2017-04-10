@@ -16,7 +16,6 @@
 var path = require('path');
 var Funnel = require('broccoli-funnel');
 var MergeTrees = require('broccoli-merge-trees');
-var uglify = require('broccoli-uglify-sourcemap');
 var stringReplace = require('broccoli-string-replace');
 
 module.exports = {
@@ -28,17 +27,20 @@ module.exports = {
     this.import('vendor/shims/esri-loader.js');
   },
 
-  // copy UMD build of esri-loader to public tree
+  // copy UMD builds of esri-loader to public tree
   // as a peer to vendor and app scripts
   treeForPublic(publicTree) {
-    var env = this.app.env;
-    var esriLoaderTree = new Funnel(path.dirname(require.resolve('esri-loader/esri-loader.js')), {
-      files: ['esri-loader.js'],
+    var isProduction = this.app.env === 'production';
+    var files;
+    if (isProduction) {
+      files = ['esri-loader.min.js', 'esri-loader.min.js.map'];
+    } else {
+      files = ['esri-loader.js', 'esri-loader.js.map'];
+    }
+    var esriLoaderTree = new Funnel(path.dirname(require.resolve('esri-loader/dist/esri-loader.js')), {
+      files: files,
       destDir: 'assets'
     });
-    if (env === 'production') {
-      esriLoaderTree = uglify(esriLoaderTree);
-    }
     if (!publicTree) {
       return esriLoaderTree;
     }
@@ -48,9 +50,11 @@ module.exports = {
   // inject esri-loader script tag instead of importing into vendor.js
   // so that it is not subject to the find and replace below
   contentFor (type, config) {
+    var isProduction = config.environment === 'production';
+    var fileName = isProduction ? 'esri-loader.min.js' : 'esri-loader.js';
     // TODO: or test-body-footer?
     if (type === 'body-footer') {
-      return `<script src="${config.rootURL}assets/esri-loader.js"></script>`;
+      return '<script src="' + config.rootURL + 'assets/' + fileName + '"></script>';
     }
   },
 
