@@ -1,10 +1,12 @@
 # ember-esri-loader
 
-An [Ember addon](https://ember-cli.com/extending/) to allow lazy loading and preloading the [ArcGIS API for JavaScript](https://developers.arcgis.com/javascript/) in Ember applications.
+An [Ember addon](https://ember-cli.com/extending/) that wraps the [esri-loader](https://github.com/tomwayson/esri-loader) library to allow lazy loading and preloading the [ArcGIS API for JavaScript](https://developers.arcgis.com/javascript/) in Ember applications.
 
 ![An example of preloading the ArcGIS API](/preload-jsapi-in-ember.gif)
 
 [View it live](http://ember-esri-loader.surge.sh/).
+
+See the [esri-loader README](https://github.com/tomwayson/esri-loader#why-is-this-needed) for more information on why this is needed.
 
 ## Installation
 
@@ -15,6 +17,17 @@ ember install ember-esri-loader
 ```
 
 ## Usage
+
+### Loading Styles
+
+Before you can use the ArcGIS API in your app, you'll need to load the styles, for example by adding an import to your app's style sheet:
+
+```css
+/* app/styles/app.css */
+
+/* esri styles */
+@import url('https://js.arcgis.com/3.20/esri/css/esri.css');
+```
 
 ### Pre-loading the ArcGIS API for JavaScript
 
@@ -104,22 +117,13 @@ export default Ember.Component.extend({
 });
 ```
 
-### Loading Styles
-
-Before you can use the ArcGIS API in your app, you'll need to load the styles, for example by adding something like the following to app/styles/app.css:
-
-```css
-/* esri styles */
-@import url('https://js.arcgis.com/3.20/esri/css/esri.css');
-```
-
 ## How It Works
 
-This addon is an implementation of the ["Dedicated Loader Module" pattern](http://tomwayson.com/2016/11/27/using-the-arcgis-api-for-javascript-in-applications-built-with-webpack/) for [Ember](http://emberjs.com/). It is a mashup of the ideas from [angular2-esri-loader](https://github.com/tomwayson/angular2-esri-loader) and [ember-cli-amd](https://github.com/Esri/ember-cli-amd). Like angular2-esri-loader, it creates a service that exposes functions that wrap calls to load the ArcGIS API and it's modules in promises. However, in order to avoid global namespace collisions with [loader.js](https://github.com/ember-cli/loader.js)'s `require()` and `define()` this addon also has to <del>steal</del> borrow from ember-cli-amd the code that finds and replaces those terms with their pig-latin counterparts in the build output. However unlike ember-cli-amd, it does **not** inject the ArcGIS for JavaScript in the page, nor does it use the ArcGIS API's Dojo loader to load the entire app.
+This addon is an implementation of the ["Dedicated Loader Module" pattern](http://tomwayson.com/2016/11/27/using-the-arcgis-api-for-javascript-in-applications-built-with-webpack/) for [Ember](http://emberjs.com/). It is a mashup of the ideas from [angular2-esri-loader](https://github.com/tomwayson/angular2-esri-loader) and [ember-cli-amd](https://github.com/Esri/ember-cli-amd). Like angular2-esri-loader, it creates a service that exposes functions that wrap calls to the [esri-loader](https://github.com/tomwayson/esri-loader) library to load the ArcGIS API and it's modules in promises. However, in order to avoid global namespace collisions with [loader.js](https://github.com/ember-cli/loader.js)'s `require()` and `define()` this addon also has to <del>steal</del> borrow from ember-cli-amd the code that finds and replaces those terms with their pig-latin counterparts in the build output. However unlike ember-cli-amd, it does **not** inject the ArcGIS for JavaScript in the page, nor does it use the ArcGIS API's Dojo loader to load the entire app.
 
 ### Limitations
 
-You cannot use ES2015 module syntax (i.e. `import Map from 'esri/map';`) with this addon. If you do not feel that your application would benefit from lazy-loading
+You cannot use ES2015 module syntax for ArcGIS API modules (i.e. `import Map from 'esri/map';`) with this addon. If you do not feel that your application would benefit from lazy-loading
 the ArcGIS API, and you'd prefer the cleaner abstraction of being able to use
 `import` statements, you can use [ember-cli-amd](https://emberobserver.com/addons/ember-cli-amd).
 
