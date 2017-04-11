@@ -14,14 +14,54 @@
 /* jshint node: true */
 'use strict';
 var path = require('path');
+var Funnel = require('broccoli-funnel');
+var MergeTrees = require('broccoli-merge-trees');
 var stringReplace = require('broccoli-string-replace');
 
 module.exports = {
   name: 'ember-esri-loader',
 
+  // support "import esriLoader from 'esri-loader';" syntax
+  included() {
+    this._super.included.apply(this, arguments);
+    this.import('vendor/shims/esri-loader.js');
+  },
+
+  // copy UMD builds of esri-loader to public tree
+  // as a peer to vendor and app scripts
+  treeForPublic(publicTree) {
+    var isProduction = this.app.env === 'production';
+    var files;
+    if (isProduction) {
+      files = ['esri-loader.min.js', 'esri-loader.min.js.map'];
+    } else {
+      files = ['esri-loader.js', 'esri-loader.js.map'];
+    }
+    var esriLoaderTree = new Funnel(path.dirname(require.resolve('esri-loader/dist/esri-loader.js')), {
+      files: files,
+      destDir: 'assets'
+    });
+    if (!publicTree) {
+      return esriLoaderTree;
+    }
+    return new MergeTrees([publicTree, esriLoaderTree]);
+  },
+
+  // inject esri-loader script tag instead of importing into vendor.js
+  // so that it is not subject to the find and replace below
+  contentFor (type, config) {
+    if (type === 'body-footer' || type === 'test-body-footer') {
+      var isProduction = config.environment === 'production';
+      var fileName = isProduction ? 'esri-loader.min.js' : 'esri-loader.js';
+      return '<script src="' + config.rootURL + 'assets/' + fileName + '"></script>';
+    }
+  },
+
+  // find and replace "require" and "define" in the vendor and app scripts
   postprocessTree: function (type, tree) {
-    if (type !== 'all')
+    if (type !== 'all') {
       return tree;
+    }
 
     var outputPaths = this.app.options.outputPaths;
 
@@ -40,13 +80,6 @@ module.exports = {
       }, {
         match: /(\W|^|["])require(\W|["]|$)/g,
         replacement: '$1equireray$2'
-      }, {
-        // TODO: probably a better way to achieve this, but for now
-        // we use a special token "__dojoRequire" for the places in the
-        // esri-loader service where we want to allow nested require statements
-        // and this regExp will replace that token with calls to require()
-        match: /(\W|^|["])__dojoRequire(\W|["]|$)/g,
-        replacement: '$1require$2'
       }]
     };
     var dataTree = stringReplace(tree, data);

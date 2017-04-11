@@ -1,72 +1,74 @@
 import { moduleFor } from 'ember-qunit';
 import test from 'ember-sinon-qunit/test-support/test';
+import esriLoader from 'esri-loader';
 
 moduleFor('service:esri-loader', 'Unit | Service | esri loader', {
   // Specify the other units that are required for this test.
   // needs: ['service:foo']
-  beforeEach () {
-    // remove previously stubbed require function
-    // NOTE: this could cause problems if used w/ other tests
-    // that actually call laod() w/o stubbing the function (i.e. acceptance tests)
-    // but it prevents the "not yet loaded" test from causing failures
-    delete window.__dojoRequire;
-  }
 });
 
-// that can be mutated outside of this test, like in an acceptance test
-test('when has not yet been loaded', function(assert) {
-  assert.expect(2);
+test('isLoaded', function (assert) {
   let service = this.subject();
-  // NOTE: this could fail if used w/ other tests that actually call laod()
-  assert.notOk(service.get('isLoaded'), 'isLoaded should be false');
-  // try loading modules before JSAPI is loaded - this should fail
-  // NOTE: if actually loaded this can cause tests to hang
-  return service.loadModules(['esri/map', 'esri/layers/VectorTileLayer']).then(() => {}, err => {
-    assert.equal(err.message, 'The ArcGIS API for JavaScript has not been loaded. You must first call esriLoader.load()');
+  const stub = this.stub(esriLoader, 'isLoaded');
+  service.get('isLoaded');
+  assert.ok(stub.calledOnce, 'isLoaded was called once');
+});
+
+test('load', function (assert) {
+  assert.expect(1);
+  let service = this.subject();
+  const stub = this.stub(esriLoader, 'bootstrap', function (callback) {
+    callback();
+  });
+  return service.load().then(() => {
+    assert.ok(stub.calledOnce, 'bootstrap was called once');
   });
 });
 
-// NOTE: hoping to be able to use esri-loader library, see:
-// https://github.com/ArcGIS/ember-esri-loader/issues/13
-// in which case most of the tests below should be covered in that repo
-
-test('load', function(assert) {
-  const done = assert.async();
+test('load with options', function (assert) {
   assert.expect(2);
   let service = this.subject();
-  const stub = this.stub(document.body, 'appendChild', (el) => {
-    el.onload();
-  });
-  service.load();
-  assert.ok(stub.calledOnce, 'appendChild was called once');
-  assert.equal(stub.getCall(0).args[0].src, 'https://js.arcgis.com/4.3');
-  done();
-});
-
-test('load other version', function(assert) {
-  const done = assert.async();
-  assert.expect(2);
-  let service = this.subject();
-  const stub = this.stub(document.body, 'appendChild', (el) => {
-    el.onload();
-  });
-  service.load({
+  const options = {
     url: 'https://js.arcgis.com/3.20'
+  };
+  const stub = this.stub(esriLoader, 'bootstrap', function (callback, opts) {
+    assert.equal(opts, options);
+    callback();
   });
-  assert.ok(stub.calledOnce, 'appendChild was called once');
-  assert.equal(stub.getCall(0).args[0].src, 'https://js.arcgis.com/3.20');
-  done();
+  return service.load(options).then(() => {
+    assert.ok(stub.calledOnce, 'bootstrap was called once');
+  });
 });
 
-test('load modules', function(assert) {
-  const done = assert.async();
+test('load modules when API is loaded', function (assert) {
+  assert.expect(2);
+  let service = this.subject();
+  const moduleNames = ['esri/map', 'esri/layers/VectorTileLayer'];
+  const stub = this.stub(esriLoader, 'dojoRequire', function (modNames, callback) {
+    assert.equal(modNames, moduleNames);
+    callback();
+  });
+  // emulate loaded condition
+  this.stub(esriLoader, 'isLoaded', function () {
+    return true;
+  });
+  return service.loadModules(moduleNames).then(() => {
+    assert.ok(stub.calledOnce, 'dojoRequire was called once');
+  });
+});
+
+test('load modules when API is not loaded', function (assert) {
   assert.expect(1);
   let service = this.subject();
   const moduleNames = ['esri/map', 'esri/layers/VectorTileLayer'];
-  window.__dojoRequire = function (names, callback) {
-    assert.equal(names, moduleNames, '__dojoRequire called w/ correct args');
+  this.stub(esriLoader, 'dojoRequire', function (modNames, callback) {
     callback();
-  };
-  service.loadModules(moduleNames);
-  done();
+  });
+  // emulate not loaded condition
+  this.stub(esriLoader, 'isLoaded', function () {
+    return false;
+  });
+  return service.loadModules(moduleNames).catch(err => {
+    assert.equal(err.message, 'The ArcGIS API for JavaScript has not been loaded. You must first call esriLoader.load()');
+  });
 });
