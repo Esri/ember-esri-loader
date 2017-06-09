@@ -1,12 +1,12 @@
 # ember-esri-loader
 
-An [Ember addon](https://ember-cli.com/extending/) that wraps the [esri-loader](https://github.com/tomwayson/esri-loader) library to allow lazy loading and preloading the [ArcGIS API for JavaScript](https://developers.arcgis.com/javascript/) in Ember applications.
+An [Ember addon](https://ember-cli.com/extending/) that wraps the [esri-loader](https://github.com/Esri/esri-loader) library to allow lazy loading and preloading the [ArcGIS API for JavaScript](https://developers.arcgis.com/javascript/) in Ember applications.
 
 ![An example of preloading the ArcGIS API](/preload-jsapi-in-ember.gif)
 
 [View it live](http://ember-esri-loader.surge.sh/).
 
-See the [esri-loader README](https://github.com/tomwayson/esri-loader#why-is-this-needed) for more information on why this is needed.
+See the [esri-loader README](https://github.com/Esri/esri-loader#why-is-this-needed) for more information on why this is needed.
 
 ## Installation
 
