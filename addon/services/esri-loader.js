@@ -70,7 +70,9 @@ export default Ember.Service.extend({
   _loadModules (moduleNames) {
     return new Ember.RSVP.Promise(resolve => {
       esriLoader.dojoRequire(moduleNames, (...modules) => {
-        resolve(modules);
+        Ember.run(() => {
+          resolve(modules);
+        });
       });
     });
   }

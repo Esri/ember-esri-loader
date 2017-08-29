@@ -13,6 +13,9 @@ export default Ember.Component.extend({
     this._super(...arguments);
     // load the esri modules
     this.get('esriLoader').loadModules(['esri/views/SceneView', 'esri/Map']).then(modules => {
+      if (this.get('isDestroyed') || this.get('isDestroying')) {
+        return;
+      }
       const [SceneView, Map] = modules;
       // create a new scene view
       this._view = new SceneView({
