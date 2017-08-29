@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ArcGIS/ember-esri-loader.git"
+    "url": "git+https://github.com/Esri/ember-esri-loader.git"
   },
   "scripts": {
     "build": "ember build",
@@ -27,7 +27,7 @@
     "broccoli-merge-trees": "^2.0.0",
     "broccoli-string-replace": "^0.1.2",
     "ember-cli-babel": "^5.1.7",
-    "esri-loader": "^0.3.1"
+    "esri-loader": "^1.1.0"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
