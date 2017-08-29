@@ -8,8 +8,11 @@ test('visiting /map', function(assert) {
 
   andThen(function() {
     assert.equal(currentURL(), '/map');
-    // TODO: write an async helper to wait for the map to load
-    // and then validate the map DOM
-    // assert.equal(find('.esri-view-root').length, 1);
+    // wait for the map to load
+    waitForElement('.esri-view-root');
+    andThen(function() {
+      // validate the map DOM
+      assert.equal(find('.esri-view-root').css('height'), '400px');
+    });
   });
 });
