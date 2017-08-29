@@ -32,15 +32,17 @@ export default Ember.Service.extend({
     // otherwise create a promise that will resolve when the JSAPI is loaded
     this._loadPromise = new Ember.RSVP.Promise((resolve, reject) => {
       esriLoader.bootstrap(err => {
-        if (err) {
-          reject(err);
-        } else {
-          // notify any watchers of isLoaded copmuted property
-          this.notifyPropertyChange('isLoaded');
-          // let the caller know that the API has been successfully loaded
-          // TODO: would there be something more useful to return here?
-          resolve({ success: true });
-        }
+        Ember.run(() => {
+          if (err) {
+            reject(err);
+          } else {
+            // notify any watchers of isLoaded copmuted property
+            this.notifyPropertyChange('isLoaded');
+            // let the caller know that the API has been successfully loaded
+            // TODO: would there be something more useful to return here?
+            resolve({ success: true });
+          }
+        });
       }, options);
     });
     return this._loadPromise;
