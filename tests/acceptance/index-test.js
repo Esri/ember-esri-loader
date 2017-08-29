@@ -8,6 +8,7 @@ test('visiting /', function(assert) {
 
   andThen(function() {
     assert.equal(currentURL(), '/');
+
     assert.equal(find('p strong span').text().substr(0, 4), 'Load', 'status should be either Loading... or Loaded');
   });
 });
