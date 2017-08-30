@@ -66,6 +66,7 @@ export default Ember.Service.extend({
                 } else {
                   // wait for the script to load and then resolve
                   script.addEventListener('load', () => {
+                    // TODO: remove this event listener
                     // more fun w/ Ember.run(), tests will fail w/o this
                     Ember.run(() => {
                       // notify any watchers of isLoaded copmuted property
