@@ -1,4 +1,4 @@
-import { skip } from 'qunit';
+import { test } from 'qunit';
 import moduleForAcceptance from '../../tests/helpers/module-for-acceptance';
 
 moduleForAcceptance('Acceptance | index');
@@ -8,7 +8,7 @@ moduleForAcceptance('Acceptance | index');
 // b/c it gets called twice and throws "The ArcGIS API for JavaScript is already loaded."
 // and ember in it's infinite wisdom decides to fail the test even though the route does .catch() the error
 // TODO: don't skip this test once we resolve the above issue
-skip('visiting /', function(assert) {
+test('visiting /', function(assert) {
   visit('/');
 
   andThen(function() {
