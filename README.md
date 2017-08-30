@@ -127,6 +127,8 @@ You cannot use ES2015 module syntax for ArcGIS API modules (i.e. `import Map fro
 the ArcGIS API, and you'd prefer the cleaner abstraction of being able to use
 `import` statements, you can use [ember-cli-amd](https://emberobserver.com/addons/ember-cli-amd).
 
+Using this addon to load ArcGIS API for JavaScript v4.x modules in tests run in PhantomJS [may cause global errors](https://github.com/Esri/ember-esri-loader/pull/28#issue-253837905). Those errors did not happen when running the same tests in Chrome or FireFox.
+
 Also, this addon cannot be used in an [Ember twiddle](https://ember-twiddle.com/).
 
 ## Development Instructions
