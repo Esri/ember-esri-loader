@@ -33,15 +33,55 @@ export default Ember.Service.extend({
     this._loadPromise = new Ember.RSVP.Promise((resolve, reject) => {
       esriLoader.bootstrap(err => {
         if (err) {
-          reject(err);
+          const message = err.message || err;
+          // has esriLoader.bootstrap already been called?
+          if (message === 'The ArcGIS API for JavaScript is already loaded.') {
+            // this can happen when there is more than one instance of this service
+            // running on the page at a time, for example, in acceptance tests
+
+            // TODO: this is _much_ better handled upstream
+            // so we want to get rid of all this once this issue is resolved:
+            // https://github.com/Esri/esri-loader/issues/28
+
+            // first check if it's the same script
+            // NOTE: will haev to update this every time it's updated here:
+            // https://github.com/Esri/esri-loader/blob/master/src/esri-loader.ts#L29
+            const defaultUrl = 'https://js.arcgis.com/4.4/';
+            const url = options.url || defaultUrl;
+            const script = document.querySelector('script[data-esri-loader]');
+            if (script.src !== url) {
+              // user tried to load two different JSAPI scripts
+              reject(err);
+            } else {
+              // check if the script has loaded yet
+              if (script.dataset.esriLoader === 'loaded' || esriLoader.isLoaded()) {
+                resolve();
+              } else {
+                // wait for the script to load and then resolve
+                script.addEventListener('load', () => {
+                  // TODO: remove this event listener
+                  resolve();
+                }, false);
+              }
+            }
+          } else {
+            // not an error we can handle
+            reject(err);
+          }
         } else {
-          // notify any watchers of isLoaded copmuted property
-          this.notifyPropertyChange('isLoaded');
-          // let the caller know that the API has been successfully loaded
-          // TODO: would there be something more useful to return here?
-          resolve({ success: true });
+          // no err
+          resolve();
         }
       }, options);
+    })
+    .then(() => {
+      // update the isLoaded computed property
+      this.notifyPropertyChange('isLoaded');
+      // let the caller know that the API has been successfully loaded
+      // TODO: would there be something more useful to return here?
+      // bootstrap returns dojoRequire,
+      // but we want consumers to use loadModules instead
+      return { success: true };
     });
     return this._loadPromise;
   },

@@ -9,6 +9,9 @@ export default Ember.Component.extend({
     this._super(...arguments);
     // load the map modules
     this.get('esriLoader').loadModules(['esri/views/MapView', 'esri/WebMap']).then(modules => {
+      if (this.get('isDestroyed') || this.get('isDestroying')) {
+        return;
+      }
       const [MapView, WebMap] = modules;
       // load the webmap from a portal item
       const webmap = new WebMap({
