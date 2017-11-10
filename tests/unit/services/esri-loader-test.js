@@ -1,6 +1,7 @@
 import { moduleFor } from 'ember-qunit';
 import test from 'ember-sinon-qunit/test-support/test';
 import esriLoader from 'esri-loader';
+import Ember from 'ember';
 
 moduleFor('service:esri-loader', 'Unit | Service | esri loader', {
   // Specify the other units that are required for this test.
@@ -14,61 +15,60 @@ test('isLoaded', function (assert) {
   assert.ok(stub.calledOnce, 'isLoaded was called once');
 });
 
-test('load', function (assert) {
-  assert.expect(1);
+test('loadScript', function (assert) {
+  assert.expect(2);
   let service = this.subject();
-  const stub = this.stub(esriLoader, 'bootstrap', function (callback) {
-    callback();
+  const stub = this.stub(esriLoader, 'loadScript', function (options) {
+    assert.notOk(options, 'should not pass options');
+    return Ember.RSVP.resolve();
   });
-  return service.load().then(() => {
-    assert.ok(stub.calledOnce, 'bootstrap was called once');
+  return service.loadScript().then(() => {
+    assert.ok(stub.calledOnce, 'loadScript was called once');
   });
 });
 
-test('load with options', function (assert) {
+test('loadScript with options', function (assert) {
   assert.expect(2);
   let service = this.subject();
   const options = {
     url: 'https://js.arcgis.com/3.20'
   };
-  const stub = this.stub(esriLoader, 'bootstrap', function (callback, opts) {
-    assert.equal(opts, options);
-    callback();
+  const stub = this.stub(esriLoader, 'loadScript', function (opts) {
+    assert.equal(opts, options, 'should have passed in options');
+    return Ember.RSVP.resolve();
   });
-  return service.load(options).then(() => {
+  return service.loadScript(options).then(() => {
     assert.ok(stub.calledOnce, 'bootstrap was called once');
   });
 });
 
-test('load modules when API is loaded', function (assert) {
-  assert.expect(2);
+test('loadModules', function (assert) {
+  assert.expect(3);
   let service = this.subject();
   const moduleNames = ['esri/map', 'esri/layers/VectorTileLayer'];
-  const stub = this.stub(esriLoader, 'dojoRequire', function (modNames, callback) {
-    assert.equal(modNames, moduleNames);
-    callback();
-  });
-  // emulate loaded condition
-  this.stub(esriLoader, 'isLoaded', function () {
-    return true;
+  const stub = this.stub(esriLoader, 'loadModules', function (modNames, opts) {
+    assert.equal(modNames, moduleNames, 'should pass same modules names');
+    assert.notOk(opts, 'should not pass options');
+    return Ember.RSVP.resolve();
   });
   return service.loadModules(moduleNames).then(() => {
-    assert.ok(stub.calledOnce, 'dojoRequire was called once');
+    assert.ok(stub.calledOnce, 'loadModules was called once');
   });
 });
 
-test('load modules when API is not loaded', function (assert) {
-  assert.expect(1);
+test('loadModules with options', function (assert) {
+  assert.expect(3);
   let service = this.subject();
   const moduleNames = ['esri/map', 'esri/layers/VectorTileLayer'];
-  this.stub(esriLoader, 'dojoRequire', function (modNames, callback) {
-    callback();
+  const options = {
+    url: 'https://js.arcgis.com/3.20'
+  };
+  const stub = this.stub(esriLoader, 'loadModules', function (modNames, opts) {
+    assert.equal(modNames, moduleNames, 'should pass same modules names');
+    assert.equal(opts, options, 'should have passed in options');
+    return Ember.RSVP.resolve();
   });
-  // emulate not loaded condition
-  this.stub(esriLoader, 'isLoaded', function () {
-    return false;
-  });
-  return service.loadModules(moduleNames).catch(err => {
-    assert.equal(err.message, 'The ArcGIS API for JavaScript has not been loaded. You must first call esriLoader.load()');
+  return service.loadModules(moduleNames, options).then(() => {
+    assert.ok(stub.calledOnce, 'loadModules was called once');
   });
 });

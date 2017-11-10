@@ -29,57 +29,9 @@ Before you can use the ArcGIS API in your app, you'll need to load the styles, f
 @import url('https://js.arcgis.com/3.20/esri/css/esri.css');
 ```
 
-### Pre-loading the ArcGIS API for JavaScript
-
-If you have good reason to believe that the user is going to transition to a map route, you may want to start pre-loading the ArcGIS API as soon as possible w/o blocking template rendering. You can add the following to the application route:
-
-```js
-// app/routes/application.js
-import Ember from 'ember';
-
-export default Ember.Route.extend({
-  esriLoader: Ember.inject.service('esri-loader'),
-
-  renderTemplate: function () {
-    // render the template as normal
-    this._super(...arguments);
-    // then preload the JSAPI
-    // NOTE: to use the latest 4.x release don't pass any arguments to load()
-    this.get('esriLoader').load().catch(err => {
-      // do something with the error
-    });
-  }
-});
-```
-
-### Lazy Loading the ArcGIS API for JavaScript
-
-Alternatively you can lazy load the ArcGIS API for JavaScript the first time a user goes to the map's route. One way would be to add the following to the route's controller:
-
-```js
-// app/controllers/map.js
-import Ember from 'ember';
-
-export default Ember.Controller.extend({
-  esriLoader: Ember.inject.service('esri-loader'),
-
-  // this will be called only the first time the route is loaded
-  init () {
-    this._super(...arguments);
-    // lazy load the JSAPI
-    const esriLoader = this.get('esriLoader');
-    // NOTE: to use a version other than the latest  4.x release
-    // pass the url in the options argument to load()
-    esriLoader.load({ url: 'https://js.arcgis.com/3.20compact' }).catch(err => {
-      // do something with the error
-    });
-  }
-});
-```
-
 ### Loading Modules from the ArcGIS API for JavaScript
 
-Once you've loaded the API (typically in a route or controller), you can then load modules. Here's an example of how you could load and use the 3.x `Map` and `VectorTileLayer` classes in a component to create a map:
+Here's an example of how you could load and use the 3.x `Map` and `VectorTileLayer` classes in a component to create a map:
 
 ```js
 // app/components/esri-map.js
@@ -93,8 +45,13 @@ export default Ember.Component.extend({
   // once we have a DOM node to attach the map to...
   didInsertElement () {
     this._super(...arguments);
+    // options are only needed b/c we're not using the latest 4.x version of the API
+    const options = {
+      url: 'https://js.arcgis.com/3.20compact'
+    };
     // load the map modules
-    this.get('esriLoader').loadModules(['esri/map', 'esri/layers/VectorTileLayer']).then(modules => {
+    this.get('esriLoader').loadModules(['esri/map', 'esri/layers/VectorTileLayer'], options)
+    .then(modules => {
       const [Map, VectorTileLayer] = modules;
       // create a map at the DOM node
       this._map = new Map(this.elementId, {
@@ -116,6 +73,36 @@ export default Ember.Component.extend({
   }
 });
 ```
+
+#### Lazy Loading the ArcGIS API for JavaScript
+
+The above code will lazy load the ArcGIS API for JavaScript the first time `loadModules()` is called. This means users of your application won't need to wait for the ArcGIS API to download until it is need.
+
+### Pre-loading the ArcGIS API for JavaScript
+
+Alternatively, if you have good reason to believe that the user is going to transition to a map route, you may want to start pre-loading the ArcGIS API as soon as possible w/o blocking template rendering. You can add the following to the application route:
+
+```js
+// app/routes/application.js
+import Ember from 'ember';
+
+export default Ember.Route.extend({
+  esriLoader: Ember.inject.service('esri-loader'),
+
+  renderTemplate: function () {
+    // render the template as normal
+    this._super(...arguments);
+    // then preload the JSAPI
+    // NOTE: to use the latest 4.x release don't pass any arguments to loadScript()
+    this.get('esriLoader').loadScript()
+    .catch(err => {
+      // do something with the error
+    });
+  }
+});
+```
+
+Now you can use `loadModules()` in components to [create maps](https://github.com/Esri/ember-esri-loader/blob/master/tests/dummy/app/components/web-map.js) or [3D scenes](https://github.com/Esri/ember-esri-loader/blob/master/tests/dummy/app/components/scene-view.js). Also, if you need to, you can [use `isLoaded()` anywhere in your application to find out whether or not the ArcGIS API has finished loading](https://github.com/Esri/ember-esri-loader/blob/master/tests/dummy/app/controllers/application.js).
 
 ## How It Works
 

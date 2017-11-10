@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+
+### Added
+- `loadModules()` can now lazy load the ArcGIS API
+
+### Changed
+- bumped ersi-loader to 1.5.0 for the promise-based API and defaulting to the latest JSAPI (v.4.5)
+
 ## 0.1.4
 
 ### Fixed

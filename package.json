@@ -27,7 +27,7 @@
     "broccoli-merge-trees": "^2.0.0",
     "broccoli-string-replace": "^0.1.2",
     "ember-cli-babel": "^5.1.7",
-    "esri-loader": "^1.1.0"
+    "esri-loader": "^1.5.0"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
