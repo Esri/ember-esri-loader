@@ -71,6 +71,8 @@ module.exports = {
       files: [
         new RegExp(path.parse(outputPaths.app.js).name + '(.*js)'),
         new RegExp(path.parse(outputPaths.vendor.js).name + '(.*js)'),
+        // TODO: better RegExp for fastboot-fetch
+        new RegExp('fastboot-fetch' + '(.*js)'),
         new RegExp(path.parse(outputPaths.tests.js).name + '(.*js)'),
         new RegExp(path.parse(outputPaths.testSupport.js.testSupport).name + '(.*js)')
       ],
