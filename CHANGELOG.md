@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+
+### Fixed
+- bump esri-loader to fix sourcemap error in production builds
+
+### Changed
+- include all esri-loader umd output in public tree
+
 ## 0.2.2
 
 ### Fixed
