@@ -37,7 +37,7 @@ module.exports = {
     } else {
       files = ['esri-loader.js', 'esri-loader.js.map'];
     }
-    var esriLoaderTree = new Funnel(path.dirname(require.resolve('esri-loader/dist/esri-loader.js')), {
+    var esriLoaderTree = new Funnel(path.dirname(require.resolve('esri-loader')), {
       files: files,
       destDir: 'assets'
     });
