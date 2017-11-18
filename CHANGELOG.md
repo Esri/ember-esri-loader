@@ -2,10 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## 0.2.2
 
-### Changed
-- bump to latest esri-loader to fix file not found build error
+### Fixed
+- bump to latest esri-loader and fix file not found build error
 
 ## 0.2.1
 
