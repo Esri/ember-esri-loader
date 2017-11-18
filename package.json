@@ -61,6 +61,7 @@
     "node": ">= 0.12.0"
   },
   "ember-addon": {
+    "before": "ember-cli-sri",
     "configPath": "tests/dummy/config"
   },
   "main": "index.js",
