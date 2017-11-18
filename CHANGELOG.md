@@ -7,6 +7,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - also do find and replace on define for FastBoot files
 
+## 0.2.1
+
+### Fixed
+- find/replace require/define before integrity SHAs are generated
+
 ## 0.2.0
 
 ### Added
