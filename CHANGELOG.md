@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+
+### Added
+- also do find and replace on define for FastBoot files
+
 ## 0.2.1
 
 ### Fixed
