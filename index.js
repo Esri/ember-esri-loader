@@ -30,15 +30,8 @@ module.exports = {
   // copy UMD builds of esri-loader to public tree
   // as a peer to vendor and app scripts
   treeForPublic(publicTree) {
-    var isProduction = this.app.env === 'production';
-    var files;
-    if (isProduction) {
-      files = ['esri-loader.min.js', 'esri-loader.min.js.map'];
-    } else {
-      files = ['esri-loader.js', 'esri-loader.js.map'];
-    }
     var esriLoaderTree = new Funnel(path.dirname(require.resolve('esri-loader')), {
-      files: files,
+      files: ['esri-loader.js', 'esri-loader.js.map', 'esri-loader.min.js', 'esri-loader.min.js.map'],
       destDir: 'assets'
     });
     if (!publicTree) {
