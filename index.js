@@ -65,6 +65,7 @@ module.exports = {
         new RegExp(path.parse(outputPaths.app.js).name + '(.*js)'),
         new RegExp(path.parse(outputPaths.vendor.js).name + '(.*js)'),
         new RegExp(path.parse(outputPaths.tests.js).name + '(.*js)'),
+        'tests/index.html',
         new RegExp(path.parse(outputPaths.testSupport.js.testSupport).name + '(.*js)')
       ],
       patterns: [{
