@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+
+### Added
+- bump esri-loader to default to JSAPI 4.6
+
+### Fixed
+- bump esri-loader to fix bugs w/ sever-side rendering and preloading 3.x
+
 ## 0.2.4
 
 ### Fixed
