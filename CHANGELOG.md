@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+
+### Breaking
+- bump esri-loader to 2.0.0
+
 ## 0.3.0
 
 ### Added
