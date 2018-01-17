@@ -118,6 +118,14 @@ Using this addon to load ArcGIS API for JavaScript v4.x modules in tests run in 
 
 Also, this addon cannot be used in an [Ember twiddle](https://ember-twiddle.com/).
 
+## Examples
+
+In addition to ArcGIS Online applications such as [ArcGIS Hub](https://hub.arcgis.com/), the following open source applications use this addon:
+
+[MyStreet](https://github.com/Esri/MyStreet) - A municipality viewer that allows users to input an address and receive information based on that location uses this addon to lazy load v3.x of the ArcGIS API only when an app uses a map.
+
+The [dummy application for this addon](http://ember-esri-loader.surge.sh/) demonstrates how to pre-load v4.x of the ArcGIS API.
+
 ## Development Instructions
 
 ### Fork, Clone, and Install
