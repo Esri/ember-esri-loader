@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## 2.0.1
 
 ### Fixed
 - updated regex so it works w/ ember-bootstrap [#48](https://github.com/Esri/ember-esri-loader/issues/48)
