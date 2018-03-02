@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Fixed
+- updated regex so it works w/ ember-bootstrap [#48](https://github.com/Esri/ember-esri-loader/issues/48)
+
 ### Changed
 - added Examples section to README
 
