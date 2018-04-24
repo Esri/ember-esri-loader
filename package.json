@@ -1,6 +1,6 @@
 {
   "name": "ember-esri-loader",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "The default blueprint for ember-cli addons.",
   "keywords": [
     "ember-addon",
@@ -27,7 +27,7 @@
     "broccoli-merge-trees": "^2.0.0",
     "broccoli-string-replace": "^0.1.2",
     "ember-cli-babel": "^5.1.7",
-    "esri-loader": "^2.1.0"
+    "esri-loader": "~2.1.0"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
@@ -39,6 +39,7 @@
     "ember-cli-htmlbars-inline-precompile": "^0.3.6",
     "ember-cli-inject-live-reload": "^1.4.1",
     "ember-cli-qunit": "^3.1.0",
+    "ember-cli-release": "^1.0.0-beta.2",
     "ember-cli-shims": "^1.0.2",
     "ember-cli-sri": "^2.1.0",
     "ember-cli-surge": "1.1.17",
