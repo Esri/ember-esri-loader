@@ -1,6 +1,8 @@
+import { run } from '@ember/runloop';
+import { registerAsyncHelper } from '@ember/test';
 import Ember from 'ember';
 
-export default Ember.Test.registerAsyncHelper('waitForElement', function(app, selector, context, interval=300) {
+export default registerAsyncHelper('waitForElement', function(app, selector, context, interval=300) {
   return new Ember.Test.promise(function (resolve) {
     // inform the test framework that there is an async operation in progress,
     // so it shouldn't consider the test complete
@@ -8,7 +10,7 @@ export default Ember.Test.registerAsyncHelper('waitForElement', function(app, se
     let intervalId = window.setInterval(function () {
       let $el = find(selector, context);
       if ($el.length > 0) {
-        Ember.run (function () {
+        run (function () {
           // stop this loop and resolve the promise
           window.clearInterval(intervalId);
           resolve();

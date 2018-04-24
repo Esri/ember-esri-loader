@@ -1,12 +1,13 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 import layout from '../templates/components/scene-view';
 
-export default Ember.Component.extend({
+export default Component.extend({
   layout,
 
   classNames: ['scene-view'],
 
-  esriLoader: Ember.inject.service('esri-loader'),
+  esriLoader: service('esri-loader'),
 
   // once we have a DOM node to attach the map to...
   didInsertElement () {

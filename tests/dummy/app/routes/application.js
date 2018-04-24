@@ -1,7 +1,8 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 
-export default Ember.Route.extend({
-  esriLoader: Ember.inject.service('esri-loader'),
+export default Route.extend({
+  esriLoader: service('esri-loader'),
 
   renderTemplate: function () {
     // render the template as normal
