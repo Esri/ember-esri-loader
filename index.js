@@ -11,7 +11,7 @@
   limitations under the License.
 */
 
-/* jshint node: true */
+/* eslint-env node */
 'use strict';
 var path = require('path');
 var Funnel = require('broccoli-funnel');

@@ -40,7 +40,9 @@ export default Ember.Component.extend({
       .otherwise((err) => {
         // A rejected view indicates a fatal error making it unable to display,
         // this usually means that WebGL is not available, or too old.
+        /* eslint-disable no-console */
         console.error("SceneView rejected:", err);
+        /* eslint-enable no-console */
       });
     });
   },
