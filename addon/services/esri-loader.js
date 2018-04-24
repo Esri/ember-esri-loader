@@ -54,5 +54,10 @@ export default Ember.Service.extend({
   // require the modules and return a pomise that reolves them as an array
   loadModules (moduleNames, options) {
     return esriLoader.loadModules(moduleNames, options);
+  },
+
+  // inject a css stylesheet into the page
+  loadCss (...args) {
+    return esriLoader.loadCss(...args);
   }
 });
