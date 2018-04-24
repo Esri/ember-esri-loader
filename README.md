@@ -29,6 +29,8 @@ Before you can use the ArcGIS API in your app, you'll need to load the styles, f
 @import url('https://js.arcgis.com/3.20/esri/css/esri.css');
 ```
 
+Alternatively you can use the `esriLoader` service's `loadCss()` - see the [esri-loader Loading Styles section](https://github.com/Esri/esri-loader#loading-styles) for more details.
+
 ### Loading Modules from the ArcGIS API for JavaScript
 
 Here's an example of how you could load and use the 3.x `Map` and `VectorTileLayer` classes in a component to create a map:
@@ -103,6 +105,90 @@ export default Ember.Route.extend({
 ```
 
 Now you can use `loadModules()` in components to [create maps](https://github.com/Esri/ember-esri-loader/blob/master/tests/dummy/app/components/web-map.js) or [3D scenes](https://github.com/Esri/ember-esri-loader/blob/master/tests/dummy/app/components/scene-view.js). Also, if you need to, you can [use `isLoaded()` anywhere in your application to find out whether or not the ArcGIS API has finished loading](https://github.com/Esri/ember-esri-loader/blob/master/tests/dummy/app/controllers/application.js).
+
+### esri-module-cache mixin
+
+This addon also includes a mixin that can be help mitigate one of the primary pain points of using esri-loader: accessing modules is always asynchronous. That's fine for modules like `esri/map` where you expect to be using them in an asynchronous operation (like creating a map). However, it can be cumbersome when you just need something like a `new Graphic()` to add to that map.
+
+Services or components that implement the `esri-module-cache` mixin can load all the modules they may need up front during an async operation (such as creating a map), and then use the mixin's `cacheModules()` function to store references to any of those modules so they don't have to be loaded again. Later the `getCachedModule()` and `newClassInstance()` functions can be used to synchronously access and use the modules that have already been loaded. For example:
+
+```js
+// map-service.js
+import Service, { inject as service } from '@ember/service';
+import EsriModuleCacheMixin from 'ember-esri-loader/mixins/esri-module-cache';
+
+export default Service.extend(EsriModuleCacheMixin, {
+  esriLoader: service('esri-loader'),
+  loadMap (elemendId, options) {
+    return thigs.get('esriLoader').loadModules([
+      'esri/map',
+      'esri/Graphic'
+    ]).then(([Map, Graphic]) => {
+      // cache graphic module later for synchronous use
+      this.cacheModules({ Graphic });
+      // create and return the map instance
+      return new Map(elementId, options);
+    });
+  },
+  // NOTE: this will throw an error if it is called before loadMap()
+  newGraphic (...args) {
+    return this.newClassInstance('Graphic', ...args);
+  }
+});
+```
+
+```js
+// my-map/component.js
+export default Component.extend({
+  layout,
+  mapService: service(),
+
+  // once we have a DOM node to attach the map to...
+  didInsertElement () {
+    this._super(...arguments);
+    // load the map
+    this.get('mapService').loadMap(this.elementId, { basemap: 'gray' })
+    .then(map => {
+      this.map = map;
+    })
+  },
+  actions: {
+    addGraphic (x, y) {
+      if (!this.map) {
+        // can't call newGraphic() unles map has loaded
+        // also no point in creating a gaphic if there's no map to add it to
+        return;
+      }
+      const graphicJson = {
+        geometry: {
+          x,
+          y,
+          spatialReference: {
+            wkid: 4326
+          }
+        },
+        symbol: {
+          color: [255, 0, 0, 128],
+          size: 12,
+          angle: 0,
+          xoffset: 0,
+          yoffset: 0,
+          type: 'esriSMS',
+          style: 'esriSMSSquare',
+          outline: {
+            color: [0, 0, 0, 255],
+            width: 1,
+            type: 'esriSLS',
+            style: 'esriSLSSolid'
+          }
+        }
+      };
+      const graphic =
+      this.get('mapService').newGraphic(graphicJson);
+      this.map.graphics.add(graphic);
+    }
+  }
+```
 
 ## How It Works
 
