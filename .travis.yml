@@ -11,7 +11,9 @@ dist: trusty
 addons:
   chrome: stable
 
-cache: yarn
+cache:
+  directories:
+    - $HOME/.cache/bower
 
 env:
   global:
