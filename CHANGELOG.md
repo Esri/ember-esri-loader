@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 - bump esri-loader to 2.3 to default to JSAPI 4.7
+- add esri-module-cache mixin
 
 ### Changed
 - use yarn
