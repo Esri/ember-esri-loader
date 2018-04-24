@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Added
+- bump to esri-laoder@2.1.0 and expose loadCss()
+
 ### Changed
 - update to ember 2.12
 

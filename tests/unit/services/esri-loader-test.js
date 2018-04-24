@@ -72,3 +72,16 @@ test('loadModules with options', function (assert) {
     assert.ok(stub.calledOnce, 'loadModules was called once');
   });
 });
+
+test('loadCss', function (assert) {
+  assert.expect(2);
+  let service = this.subject();
+  const url = 'https://js.arcgis.com/4.7/esri/css/main.css';
+  const stub = this.stub(esriLoader, 'loadCss', function (cssUrl) {
+    assert.equal(cssUrl, url, 'should pass same url');
+    return Ember.RSVP.resolve();
+  });
+  return service.loadCss(url).then(() => {
+    assert.ok(stub.calledOnce, 'loadCss was called once');
+  });
+});
