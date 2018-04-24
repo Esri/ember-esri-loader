@@ -2,10 +2,15 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+
+### Added
+- bump to esri-loader@2.2.0
+
 ## 2.1.0
 
 ### Added
-- bump to esri-laoder@2.1.0 and expose loadCss()
+- bump to esri-loader@2.1.0 and expose loadCss()
 
 ### Changed
 - update to ember 2.12
