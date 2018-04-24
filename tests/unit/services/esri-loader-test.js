@@ -18,7 +18,7 @@ test('isLoaded', function (assert) {
 test('loadScript', function (assert) {
   assert.expect(2);
   let service = this.subject();
-  const stub = this.stub(esriLoader, 'loadScript', function (options) {
+  const stub = this.stub(esriLoader, 'loadScript').callsFake(function (options) {
     assert.notOk(options, 'should not pass options');
     return resolve();
   });
@@ -33,7 +33,7 @@ test('loadScript with options', function (assert) {
   const options = {
     url: 'https://js.arcgis.com/3.20'
   };
-  const stub = this.stub(esriLoader, 'loadScript', function (opts) {
+  const stub = this.stub(esriLoader, 'loadScript').callsFake(function (opts) {
     assert.equal(opts, options, 'should have passed in options');
     return resolve();
   });
@@ -46,7 +46,7 @@ test('loadModules', function (assert) {
   assert.expect(3);
   let service = this.subject();
   const moduleNames = ['esri/map', 'esri/layers/VectorTileLayer'];
-  const stub = this.stub(esriLoader, 'loadModules', function (modNames, opts) {
+  const stub = this.stub(esriLoader, 'loadModules').callsFake(function (modNames, opts) {
     assert.equal(modNames, moduleNames, 'should pass same modules names');
     assert.notOk(opts, 'should not pass options');
     return resolve();
@@ -63,7 +63,7 @@ test('loadModules with options', function (assert) {
   const options = {
     url: 'https://js.arcgis.com/3.20'
   };
-  const stub = this.stub(esriLoader, 'loadModules', function (modNames, opts) {
+  const stub = this.stub(esriLoader, 'loadModules').callsFake(function (modNames, opts) {
     assert.equal(modNames, moduleNames, 'should pass same modules names');
     assert.equal(opts, options, 'should have passed in options');
     return resolve();
@@ -77,7 +77,7 @@ test('loadCss', function (assert) {
   assert.expect(2);
   let service = this.subject();
   const url = 'https://js.arcgis.com/4.7/esri/css/main.css';
-  const stub = this.stub(esriLoader, 'loadCss', function (cssUrl) {
+  const stub = this.stub(esriLoader, 'loadCss').callsFake(function (cssUrl) {
     assert.equal(cssUrl, url, 'should pass same url');
     return resolve();
   });

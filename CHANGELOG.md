@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - use yarn
+- remove deprecated dependencies
 
 ## 2.2.0
 

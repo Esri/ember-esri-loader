@@ -13,7 +13,7 @@ addons:
 
 cache:
   directories:
-    - $HOME/.npm
+    - $HOME/.cache/bower
 
 env:
   global:
@@ -35,9 +35,6 @@ matrix:
     - env: EMBER_TRY_SCENARIO=ember-canary
 
 before_install:
-  - npm install -g npm@4
-  - npm --version
-  - npm config set spin false
   - npm i -g bower
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
