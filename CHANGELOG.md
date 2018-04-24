@@ -7,6 +7,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - bump to esri-loader@2.2.0
 
+### Fixed
+- don't inject esri-loader.js into test page 2x
+
 ## 2.1.0
 
 ### Added
