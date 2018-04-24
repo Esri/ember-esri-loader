@@ -10,15 +10,19 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import Ember from 'ember';
+import { deprecate } from '@ember/application/deprecations';
+
+import { run } from '@ember/runloop';
+import { Promise as EmberPromise } from 'rsvp';
+import Service from '@ember/service';
 import esriLoader from 'esri-loader';
 
-export default Ember.Service.extend({
+export default Service.extend({
 
   init () {
     this._super(...arguments);
     // have esriLoader use Ember's RSVP promise
-    esriLoader.utils.Promise = Ember.RSVP.Promise;
+    esriLoader.utils.Promise = EmberPromise;
   },
 
   // emulate computed property isLoaded to indicate that the JSAPI been loaded
@@ -33,7 +37,7 @@ export default Ember.Service.extend({
     .then(script => {
       // have to wrap this async side effect in Ember.run() so tests don't fail
       // may be able to remove this once we can have esriLoader use RSVP.Promise
-      Ember.run(() => {
+      run(() => {
         // update the isLoaded computed property
         this.notifyPropertyChange('isLoaded');
         return script;
@@ -44,7 +48,7 @@ export default Ember.Service.extend({
   // inject a script tag pointing to the JSAPI in the page
   // and return a promise once it's loaded
   load (options = {}) {
-    Ember.deprecate('esriLoader.load() will be removed at the next breaking version. Use esriLoader.loadScript() instead.', false, {
+    deprecate('esriLoader.load() will be removed at the next breaking version. Use esriLoader.loadScript() instead.', false, {
       id: 'ember-esri-loader.load',
       until: '10.0.0'
     });

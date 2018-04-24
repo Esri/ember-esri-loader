@@ -1,7 +1,7 @@
+import { resolve } from 'rsvp';
 import { moduleFor } from 'ember-qunit';
 import test from 'ember-sinon-qunit/test-support/test';
 import esriLoader from 'esri-loader';
-import Ember from 'ember';
 
 moduleFor('service:esri-loader', 'Unit | Service | esri loader', {
   // Specify the other units that are required for this test.
@@ -20,7 +20,7 @@ test('loadScript', function (assert) {
   let service = this.subject();
   const stub = this.stub(esriLoader, 'loadScript', function (options) {
     assert.notOk(options, 'should not pass options');
-    return Ember.RSVP.resolve();
+    return resolve();
   });
   return service.loadScript().then(() => {
     assert.ok(stub.calledOnce, 'loadScript was called once');
@@ -35,7 +35,7 @@ test('loadScript with options', function (assert) {
   };
   const stub = this.stub(esriLoader, 'loadScript', function (opts) {
     assert.equal(opts, options, 'should have passed in options');
-    return Ember.RSVP.resolve();
+    return resolve();
   });
   return service.loadScript(options).then(() => {
     assert.ok(stub.calledOnce, 'bootstrap was called once');
@@ -49,7 +49,7 @@ test('loadModules', function (assert) {
   const stub = this.stub(esriLoader, 'loadModules', function (modNames, opts) {
     assert.equal(modNames, moduleNames, 'should pass same modules names');
     assert.notOk(opts, 'should not pass options');
-    return Ember.RSVP.resolve();
+    return resolve();
   });
   return service.loadModules(moduleNames).then(() => {
     assert.ok(stub.calledOnce, 'loadModules was called once');
@@ -66,7 +66,7 @@ test('loadModules with options', function (assert) {
   const stub = this.stub(esriLoader, 'loadModules', function (modNames, opts) {
     assert.equal(modNames, moduleNames, 'should pass same modules names');
     assert.equal(opts, options, 'should have passed in options');
-    return Ember.RSVP.resolve();
+    return resolve();
   });
   return service.loadModules(moduleNames, options).then(() => {
     assert.ok(stub.calledOnce, 'loadModules was called once');
@@ -79,7 +79,7 @@ test('loadCss', function (assert) {
   const url = 'https://js.arcgis.com/4.7/esri/css/main.css';
   const stub = this.stub(esriLoader, 'loadCss', function (cssUrl) {
     assert.equal(cssUrl, url, 'should pass same url');
-    return Ember.RSVP.resolve();
+    return resolve();
   });
   return service.loadCss(url).then(() => {
     assert.ok(stub.calledOnce, 'loadCss was called once');
