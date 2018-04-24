@@ -10,6 +10,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - don't inject esri-loader.js into test page 2x
 
+### Changed
+- update to ember 2.14
+
 ## 2.1.0
 
 ### Added
