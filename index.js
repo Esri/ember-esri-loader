@@ -18,6 +18,7 @@ var Funnel = require('broccoli-funnel');
 var MergeTrees = require('broccoli-merge-trees');
 var stringReplace = require('broccoli-string-replace');
 
+
 module.exports = {
   name: 'ember-esri-loader',
 
@@ -51,10 +52,27 @@ module.exports = {
     }
   },
 
+
   // find and replace "require" and "define" in the vendor and app scripts
   postprocessTree: function (type, tree) {
     if (type !== 'all') {
       return tree;
+    }
+
+    let lazyEngines = this.app.project.addons.filter((addon) => {
+      return (addon.lazyLoading && addon.lazyLoading.enabled === true);
+    });
+
+    var engineFilesToAdd = [];
+    if (lazyEngines.length) {
+      // console.info(`Application includes ${lazyEngines.length} lazy-loading engines...`);
+      var engineBase = 'engines-dist';
+      engineFilesToAdd = lazyEngines.reduce((acc, engine) => {
+        // console.info(`  ember-esri-loader will process the "${engine.options.name}"  engine...`)
+        acc.push(`${engineBase}/${engine.options.name}/assets/engine-vendor.js`);
+        acc.push(`${engineBase}/${engine.options.name}/assets/engine.js`);
+        return acc;
+      }, [])
     }
 
     var outputPaths = this.app.options.outputPaths;
@@ -77,6 +95,9 @@ module.exports = {
         replacement: '$1equireray'
       }]
     };
+    // include the engine files...
+    data.files = data.files.concat(engineFilesToAdd);
+
     var dataTree = stringReplace(tree, data);
 
     // Special case for the test loader that is doing some funky stuff with require
