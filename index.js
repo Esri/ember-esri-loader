@@ -20,7 +20,7 @@ var stringReplace = require('broccoli-string-replace');
 
 
 module.exports = {
-  name: 'ember-esri-loader',
+  name: require('./package').name,
 
   // support "import esriLoader from 'esri-loader';" syntax
   included() {

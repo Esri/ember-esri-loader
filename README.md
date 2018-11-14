@@ -1,3 +1,4 @@
+
 # ember-esri-loader
 
 An [Ember addon](https://ember-cli.com/extending/) that wraps the [esri-loader](https://github.com/Esri/esri-loader) library to allow lazy loading and preloading the [ArcGIS API for JavaScript](https://developers.arcgis.com/javascript/) in Ember applications.
@@ -8,7 +9,9 @@ An [Ember addon](https://ember-cli.com/extending/) that wraps the [esri-loader](
 
 See the [esri-loader README](https://github.com/Esri/esri-loader#why-is-this-needed) for more information on why this is needed.
 
-## Installation
+Installation
+------------------------------------------------------------------------------
+
 
 In your app's root folder run:
 
@@ -219,22 +222,25 @@ The [dummy application for this addon](http://ember-esri-loader.surge.sh/) demon
 * fork and clone the repository
 * `cd ember-esri-loader`
 * `npm install`
-* `bower install`
 
-## Running
 
-* `ember serve`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
+### Linting
+
+* `npm run lint:hbs`
+* `npm run lint:js`
+* `npm run lint:js -- --fix`
+
 
 ### Running Tests
 
-* `npm test` (Runs `ember try:each` to test your addon against multiple Ember versions)
-* `ember test`
-* `ember test --server`
+* `ember test` – Runs the test suite on the current Ember version
+* `ember test --server` – Runs the test suite in "watch mode"
+* `ember try:each` – Runs the test suite against multiple Ember versions
 
 ### Building
 
-* `ember build`
+* `ember serve`
+* Visit the dummy application at [http://localhost:4200](http://localhost:4200).
 
 For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
 
