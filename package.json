@@ -23,7 +23,7 @@
     "lint:js": "eslint .",
     "start": "ember serve",
     "test": "ember test",
-    "test:all": "ember try:each"
+    "test:all": "ember try:each --skip-cleanup"
   },
   "dependencies": {
     "broccoli-funnel": "^1.1.0",
