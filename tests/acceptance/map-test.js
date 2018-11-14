@@ -1,20 +1,20 @@
-import { test } from 'qunit';
-import moduleForAcceptance from '../../tests/helpers/module-for-acceptance';
+import { currentURL, visit, waitFor, find } from '@ember/test-helpers';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
 
-moduleForAcceptance('Acceptance | map');
+module('Acceptance | map', function(hooks) {
+  setupApplicationTest(hooks);
 
-test('visiting /map', function(assert) {
-  visit('/map');
+  test('visiting /map', async function(assert) {
+    await visit('/map');
 
-  andThen(function() {
     assert.equal(currentURL(), '/map');
     // wait for the map to load
-    /* eslint-disable no-undef */
-    waitForElement('.esri-view-root');
-    /* eslint-enable no-undef */
-    andThen(function() {
-      // validate the map DOM
-      assert.equal(find('.esri-view-root').css('height'), '400px');
-    });
+
+    await waitFor('.esri-view-root');
+    // validate the map DOM
+    let mapEl = find('.esri-view-root');
+
+    assert.equal(window.getComputedStyle(mapEl).height, '400px');
   });
 });

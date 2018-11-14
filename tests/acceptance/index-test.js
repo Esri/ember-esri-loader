@@ -1,13 +1,14 @@
-import { test } from 'qunit';
-import moduleForAcceptance from '../../tests/helpers/module-for-acceptance';
+import { currentURL, find, visit } from '@ember/test-helpers';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
 
-moduleForAcceptance('Acceptance | index');
+module('Acceptance | index', function(hooks) {
+  setupApplicationTest(hooks);
 
-test('visiting /', function(assert) {
-  visit('/');
+  test('visiting /', async function(assert) {
+    await visit('/');
 
-  andThen(function() {
     assert.equal(currentURL(), '/');
-    assert.equal(find('p strong span').text().substr(0, 4), 'Load', 'status should be either Loading... or Loaded');
+    assert.equal(find('p strong span').textContent.substr(0, 4), 'Load', 'status should be either Loading... or Loaded');
   });
 });
