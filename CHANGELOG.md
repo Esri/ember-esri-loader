@@ -2,10 +2,14 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-# Unreleased
+## Unreleased
+
+## 2.5.0
 ### Added
 - during build, we check for lazy engines, and if present, apply the transforms to those files as well.
+### Changed
 - upgrade to ember 3.4
+- use ^ instead of ~ for the esri-loader dependency
 
 ## 2.4.0
 
