@@ -32,7 +32,7 @@ export default Component.extend({
           tilt: 80
         }
       });
-      this._view.then(() => {
+      this._view.when(() => {
         // TOOD: wire up elevation checkbox
         // this._view.map.ground.layers.forEach(layer => {
         //   layer.visible = false;
