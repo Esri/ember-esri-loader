@@ -48,7 +48,7 @@ module.exports = {
     var isTest = config.environment === 'test';
     if ((type === 'body-footer' && !isTest) || (type === 'test-head-footer' && isTest)) {
       var fileName = env === 'production' ? 'esri-loader.min.js' : 'esri-loader.js';
-      return '<script src="' + config.rootURL || '' + 'assets/' + fileName + '"></script>';
+      return '<script src="' + (config.rootURL || '') + 'assets/' + fileName + '"></script>';
     }
   },
 
