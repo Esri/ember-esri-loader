@@ -51,6 +51,7 @@ export default Component.extend({
   // destroy the map before this component is removed from the DOM
   willDestroyElement () {
     if (this._view) {
+      this._view.container = null;
       delete this._view;
     }
   }

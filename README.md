@@ -21,28 +21,12 @@ ember install ember-esri-loader
 
 ## Usage
 
-### Loading Styles
-
-Before you can use the ArcGIS API in your app, you'll need to load the styles, for example by adding an import to your app's style sheet:
-
-```css
-/* app/styles/app.css */
-
-/* esri styles */
-@import url('https://js.arcgis.com/3.20/esri/css/esri.css');
-```
-
-Alternatively you can use the `esriLoader` service's `loadCss()` - see the [esri-loader Loading Styles section](https://github.com/Esri/esri-loader#loading-styles) for more details.
-
 ### Loading Modules from the ArcGIS API for JavaScript
 
-Here's an example of how you could load and use the 3.x `Map` and `VectorTileLayer` classes in a component to create a map:
+Here's an example of how you could load and use the latest 4.x `MapView` and `WebMap` classes in a component to create a map:
 
 ```js
 // app/components/esri-map.js
-import Ember from 'ember';
-import layout from '../templates/components/esri-map';
-
 export default Ember.Component.extend({
   layout,
   esriLoader: Ember.inject.service('esri-loader'),
@@ -50,34 +34,41 @@ export default Ember.Component.extend({
   // once we have a DOM node to attach the map to...
   didInsertElement () {
     this._super(...arguments);
-    // options are only needed b/c we're not using the latest 4.x version of the API
-    const options = {
-      url: 'https://js.arcgis.com/3.20compact'
-    };
     // load the map modules
-    this.get('esriLoader').loadModules(['esri/map', 'esri/layers/VectorTileLayer'], options)
-    .then(modules => {
-      const [Map, VectorTileLayer] = modules;
-      // create a map at the DOM node
-      this._map = new Map(this.elementId, {
-        center: [2.3508, 48.8567], // longitude, latitude
-        zoom: 11
+    this.get('esriLoader').loadModules(['esri/views/MapView', 'esri/WebMap']).then(modules => {
+      if (this.get('isDestroyed') || this.get('isDestroying')) {
+        return;
+      }
+      const [MapView, WebMap] = modules;
+      // load the webmap from a portal item
+      const webmap = new WebMap({
+        portalItem: { // autocasts as new PortalItem()
+          id: this.itemId
+        }
       });
-      // add a layer
-      var vtlayer = new VectorTileLayer('https://www.arcgis.com/sharing/rest/content/items/bf79e422e9454565ae0cbe9553cf6471/resources/styles/root.json');
-      this._map.addLayer(vtlayer);
+      // Set the WebMap instance to the map property in a MapView.
+      this._view = new MapView({
+        map: webmap,
+        container: this.elementId
+      });
     });
   },
 
-  // destroy the map before this component is removed from the DOM
+  // destroy the map view before this component is removed from the DOM
   willDestroyElement () {
-    if (this._map) {
-      this._map.destroy();
-      delete this._map;
+    if (this._view) {
+      this._view.container = null;
+      delete this._view;
     }
   }
 });
 ```
+
+See the [esri-loader documentation on loading modules](https://github.com/Esri/esri-loader#loading-modules-from-the-arcgis-api-for-javascript) for more details.
+
+### Loading Styles
+
+Before you can use the ArcGIS API in your app, you'll need to load the styles. See the [esri-loader documentation on loading styles](https://github.com/Esri/esri-loader#loading-styles) for more details.
 
 #### Lazy Loading the ArcGIS API for JavaScript
 

@@ -1,9 +1,6 @@
 /* bootstrap styles */
 @import url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css');
 
-/* esri styles */
-@import url('https://js.arcgis.com/4.9/esri/css/main.css');
-
 /* app styles */
 body {
   padding-top: 10px;
