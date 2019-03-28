@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
+
+## 2.8.0
 ### Added
 - bump esri-loader to 2.8.0 to get support for `version` & `css:true`
 
