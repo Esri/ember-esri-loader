@@ -2,7 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## 2.7.0
+### Added
+- bump esri-loader to 2.7.0 to get support for `insertCssBefore`
 
 ## 2.6.1
 ### Fixed
