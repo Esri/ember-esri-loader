@@ -3383,9 +3383,9 @@ esrecurse@^4.1.0:
   dependencies:
     estraverse "^4.1.0"
 
-esri-loader@~2.8.0:
-  version "2.8.0"
-  resolved "https://registry.yarnpkg.com/esri-loader/-/esri-loader-2.8.0.tgz#1b1001c4253e5a2ce9c3c4975494d705086aa1cd"
+esri-loader@~2.9.1:
+  version "2.9.1"
+  resolved "https://registry.yarnpkg.com/esri-loader/-/esri-loader-2.9.1.tgz#47e53a23be457195b33bb465f59bd17b933005c8"
 
 estraverse@^4.0.0, estraverse@^4.1.0, estraverse@^4.1.1:
   version "4.2.0"

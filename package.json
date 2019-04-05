@@ -30,7 +30,7 @@
     "broccoli-merge-trees": "^2.0.0",
     "broccoli-string-replace": "^0.1.2",
     "ember-cli-babel": "^6.16.0",
-    "esri-loader": "~2.8.0"
+    "esri-loader": "~2.9.1"
   },
   "devDependencies": {
     "@ember/optional-features": "^0.6.3",
