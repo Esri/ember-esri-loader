@@ -44,10 +44,8 @@ module.exports = {
   // inject esri-loader script tag instead of importing into vendor.js
   // so that it is not subject to the find and replace below
   contentFor (type, config) {
-    var env = config.environment;
-    var isTest = config.environment === 'test';
-    if ((type === 'body-footer' && !isTest) || (type === 'test-head-footer' && isTest)) {
-      var fileName = env === 'production' ? 'esri-loader.min.js' : 'esri-loader.js';
+    if (type === 'head-footer') {
+      var fileName = config.environment === 'production' ? 'esri-loader.min.js' : 'esri-loader.js';
       return '<script src="' + (config.rootURL || '') + 'assets/' + fileName + '"></script>';
     }
   },
