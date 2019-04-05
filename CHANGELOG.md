@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
+### Fixed
+- always inject esri-loader script in head so it is before vendor.js
 
 ## 2.8.0
 ### Added
