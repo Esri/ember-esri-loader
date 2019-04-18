@@ -69,6 +69,7 @@ module.exports = {
         // console.info(`  ember-esri-loader will process the "${engine.options.name}"  engine...`)
         acc.push(`${engineBase}/${engine.options.name}/assets/engine-vendor.js`);
         acc.push(`${engineBase}/${engine.options.name}/assets/engine.js`);
+        acc.push(`${engineBase}/${engine.options.name}/config/environment.js`);
         return acc;
       }, [])
     }
