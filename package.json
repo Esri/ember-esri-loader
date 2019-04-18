@@ -67,7 +67,7 @@
     "node": "6.* || 8.* || >= 10.*"
   },
   "ember-addon": {
-    "before": ["ember-cli-sri", "broccoli-asset-rev"],
+    "before": ["broccoli-asset-rev","ember-cli-sri"],
     "configPath": "tests/dummy/config"
   },
   "main": "index.js",
