@@ -1,6 +1,6 @@
 {
   "name": "ember-esri-loader",
-  "version": "2.9.0",
+  "version": "2.9.1",
   "description": "The default blueprint for ember-cli addons.",
   "keywords": [
     "ember-addon",
@@ -67,7 +67,10 @@
     "node": "6.* || 8.* || >= 10.*"
   },
   "ember-addon": {
-    "before": ["broccoli-asset-rev","ember-cli-sri"],
+    "before": [
+      "broccoli-asset-rev",
+      "ember-cli-sri"
+    ],
     "configPath": "tests/dummy/config"
   },
   "main": "index.js",
