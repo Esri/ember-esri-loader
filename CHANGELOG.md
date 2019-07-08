@@ -5,6 +5,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 ### Changed
 - added more support for engines, and ensured this runs before `broccoli-asset-rev`
+### Added
+- bump esri-loader to 2.10.0 to default to JSAPI 4.12
 
 ## 2.9.0
 ### Added
