@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - removed deprecated `esriLoader.load()` in favor of `esriLoader.loadScript()`
 ### Changed
 - remove bower and have dummy app get bootstrap from CDN
+- no longer use jQuery (or bootstrap JS) in dummy app
 
 ## 2.9.1
 ### Changed
