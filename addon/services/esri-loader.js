@@ -10,7 +10,6 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import { deprecate } from '@ember/application/deprecations';
 
 import { run } from '@ember/runloop';
 import { Promise as EmberPromise } from 'rsvp';
@@ -32,6 +31,8 @@ export default Service.extend({
     }
   },
 
+  // inject a script tag pointing to the JSAPI in the page
+  // and return a promise once it's loaded
   loadScript (options) {
     return esriLoader.loadScript(options)
     .then(script => {
@@ -43,16 +44,6 @@ export default Service.extend({
         return script;
       });
     });
-  },
-
-  // inject a script tag pointing to the JSAPI in the page
-  // and return a promise once it's loaded
-  load (options = {}) {
-    deprecate('esriLoader.load() will be removed at the next breaking version. Use esriLoader.loadScript() instead.', false, {
-      id: 'ember-esri-loader.load',
-      until: '10.0.0'
-    });
-    return this.loadScript(options);
   },
 
   // require the modules and return a pomise that reolves them as an array

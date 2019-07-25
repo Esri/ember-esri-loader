@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - bump esri-loader to 2.10.0 to default to JSAPI 4.12
 ### Breaking
 - esri-loader is now a peer dependency and must be explicitly installed
+- removed deprecated `esriLoader.load()` in favor of `esriLoader.loadScript()`
 
 ## 2.9.1
 ### Changed
