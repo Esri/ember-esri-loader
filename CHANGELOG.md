@@ -8,6 +8,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Breaking
 - esri-loader is now a peer dependency and must be explicitly installed
 - removed deprecated `esriLoader.load()` in favor of `esriLoader.loadScript()`
+### Changed
+- remove bower and have dummy app get bootstrap from CDN
 
 ## 2.9.1
 ### Changed

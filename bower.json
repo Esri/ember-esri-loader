@@ -1,7 +1,0 @@
-{
-  "name": "ember-esri-loader",
-  "dependencies": {},
-  "devDependencies": {
-    "bootstrap": "^3.3.7"
-  }
-}

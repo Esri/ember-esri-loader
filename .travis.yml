@@ -11,10 +11,6 @@ dist: trusty
 addons:
   chrome: stable
 
-cache:
-  directories:
-    - $HOME/.cache/bower
-
 env:
   global:
     # See https://git.io/vdao3 for details.
@@ -46,14 +42,12 @@ jobs:
     - env: EMBER_TRY_SCENARIO=ember-default-with-jquery
 
 before_install:
-  - npm i -g bower
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3 # give xvfb some time to start
 
 install:
   - yarn
-  - bower install
 
 script:
   - node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO --skip-cleanup
