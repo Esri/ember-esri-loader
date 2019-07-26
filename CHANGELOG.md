@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
+
+## 3.0.0
 ### Added
 - bump esri-loader to 2.10.0 to default to JSAPI 4.12
 ### Breaking
