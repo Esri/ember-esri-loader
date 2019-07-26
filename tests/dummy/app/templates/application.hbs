@@ -1,10 +1,10 @@
 <div class="container">
 
-  <!-- JSAPI load status -->
+  {{!-- JSAPI load status --}}
   <p style="text-align: right">The ArcGIS API for JavaScript
     is: <strong>{{#unless jsapiLoaded }}<span class="text-muted">Loading...</span>{{else}}<span class="text-success">Loaded</span>{{/unless}}</strong></p>
 
-  <!-- navbar -->
+  {{!-- navbar --}}
   <nav class="navbar navbar-default">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -26,10 +26,10 @@
           <li><a href="https://github.com/Esri/ember-esri-loader" target="_blank">GitHub</a></li>
         </ul>
       </div>
-    </div><!--/.container-fluid -->
+    </div>{{!--/.container-fluid --}}
   </nav>
 
-  <!-- page content -->
+  {{!-- page content --}}
   {{outlet}}
 
-</div> <!-- /container -->
+</div> {{!-- /container --}}

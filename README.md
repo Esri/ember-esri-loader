@@ -16,6 +16,7 @@ Installation
 In your app's root folder run:
 
 ```shell
+npm install esri-loader
 ember install ember-esri-loader
 ```
 

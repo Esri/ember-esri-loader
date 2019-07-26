@@ -3,6 +3,16 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
+### Added
+- bump esri-loader to 2.10.0 to default to JSAPI 4.12
+### Breaking
+- esri-loader is now a peer dependency and must be explicitly installed
+- removed deprecated `esriLoader.load()` in favor of `esriLoader.loadScript()`
+### Changed
+- remove bower and have dummy app get bootstrap from CDN
+- no longer use jQuery (or bootstrap JS) in dummy app
+
+## 2.9.1
 ### Changed
 - added more support for engines, and ensured this runs before `broccoli-asset-rev`
 
