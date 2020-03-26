@@ -33,8 +33,7 @@
     "broccoli-funnel": "^1.1.0",
     "broccoli-merge-trees": "^2.0.0",
     "ember-cli-babel": "^6.16.0",
-    "espree": "^6.2.1",
-    "esprima-walk": "^0.1.0"
+    "replace-require-and-define": "^0.1.0"
   },
   "devDependencies": {
     "@ember/optional-features": "^0.6.3",
