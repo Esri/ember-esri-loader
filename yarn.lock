@@ -7775,6 +7775,14 @@ repeating@^2.0.0:
   dependencies:
     is-finite "^1.0.0"
 
+replace-require-and-define@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/replace-require-and-define/-/replace-require-and-define-0.1.0.tgz#308e1e08c431e6535baac69986bd4f838434510e"
+  integrity sha512-+j2XrCutL/DRbw6azIptTvVyzjbHiYnJBp1XKqRQEZ4xFjMX6/NwOhoSR1y8wGYbPpwLKVCCIH+V+Wc+QjOL5g==
+  dependencies:
+    espree "^6.2.1"
+    esprima-walk "^0.1.0"
+
 request@2, request@^2.47.0, request@^2.74.0:
   version "2.85.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.85.0.tgz#5a03615a47c61420b3eb99b7dba204f83603e1fa"
