@@ -32,9 +32,11 @@ module.exports = {
     const options = app.options;
     const esriLoader = options && options.esriLoader;
     const excludePaths = ['assets/esri-loader'].concat(esriLoader ? esriLoader.excludePaths : []);
-    app.options.esriLoader = Object.assign({
-      excludePaths,
-    }, app.options.esriLoader);
+    app.options.esriLoader = Object.assign(
+      {},
+      app.options.esriLoader,
+      { excludePaths }
+    );
 
     // support "import esriLoader from 'esri-loader';" syntax
     this.import('vendor/shims/esri-loader.js');
