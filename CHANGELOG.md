@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## 3.0.3
+### Fixed
+- fix and document excludePaths build option
+
 ## 3.0.2
 ### Changed
 - move replace-require-and-define into an external package
