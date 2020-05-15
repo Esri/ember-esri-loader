@@ -86,8 +86,10 @@ module.exports = {
         'tests/index.html',
         new RegExp(path.parse(outputPaths.testSupport.js.testSupport).name + '(.*js)')
       ],
+      // TODO: add automated tests for these regex's
+      // for now, this one can be tested here: https://regexr.com/54mq6
       patterns: [{
-        match: /([^A-Za-z0-9_#']|^|["])define(?=\W|["]|$)/g,
+        match: /([^A-Za-z0-9_#']|^|["])(?<!customElements\.)define(?=\W|["]|$)/g,
         replacement: '$1efineday'
       }, {
         match: /(\W|^|["])require(?=\W|["]|$)/g,
@@ -106,7 +108,7 @@ module.exports = {
         new RegExp(path.parse(outputPaths.testSupport.js.testLoader).name + '(.*js)')
       ],
       patterns: [{
-        match: /(\W|^|["])define(\W|["]|$)/g,
+        match: /(\W|^|["])(?<!customElements\.)define(\W|["]|$)/g,
         replacement: '$1efineday$2'
       }, {
         match: /require([.])/g,
