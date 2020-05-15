@@ -4,6 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## 3.0.4
 ### Changed
 - go back to using regex to replace `require` and `define`
 
