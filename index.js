@@ -13,32 +13,18 @@
 
 /* eslint-env node */
 'use strict';
-const ReplaceRequireAndDefine = require('./lib/replace-require-and-define-filter');
 var path = require('path');
 var Funnel = require('broccoli-funnel');
 var MergeTrees = require('broccoli-merge-trees');
+var stringReplace = require('broccoli-string-replace');
+
 
 module.exports = {
   name: require('./package').name,
 
-  included(app) {
+  // support "import esriLoader from 'esri-loader';" syntax
+  included() {
     this._super.included.apply(this, arguments);
-
-    // Note: this function is only called once even if using ember build --watch or ember serve
-    // This is the entry point for this addon. We will collect the options from the ember-cli-build.js
-    // This addon can use an 'esriLoader' options in the ember-cli-build.js file
-
-    // Merge the default options
-    const options = app.options;
-    const esriLoader = options && options.esriLoader;
-    const excludePaths = ['assets/esri-loader'].concat(esriLoader ? esriLoader.excludePaths : []);
-    app.options.esriLoader = Object.assign(
-      {},
-      app.options.esriLoader,
-      { excludePaths }
-    );
-
-    // support "import esriLoader from 'esri-loader';" syntax
     this.import('vendor/shims/esri-loader.js');
   },
 
@@ -64,20 +50,79 @@ module.exports = {
     }
   },
 
-  // find and replace "require" and "define" in the vendor and app scripts
-  postprocessTree(type, tree) {
-    // TODO: remove this?
-    if (!this.app.options.esriLoader) {
-      return tree;
-    }
 
+  // find and replace "require" and "define" in the vendor and app scripts
+  postprocessTree: function (type, tree) {
     if (type !== 'all') {
       return tree;
     }
 
-    // Note: this function will be called once during the continuous build. 
-    // However, the tree returned will be directly manipulated by the continuous build.
-    
-    return new ReplaceRequireAndDefine(this.app, tree);
+    let lazyEngines = this.app.project.addons.filter((addon) => {
+      return (addon.lazyLoading && addon.lazyLoading.enabled === true);
+    });
+
+    var engineFilesToAdd = [];
+    if (lazyEngines.length) {
+      // console.info(`Application includes ${lazyEngines.length} lazy-loading engines...`);
+      var engineBase = 'engines-dist';
+      engineFilesToAdd = lazyEngines.reduce((acc, engine) => {
+        // console.info(`  ember-esri-loader will process the "${engine.options.name}"  engine...`)
+        acc.push(`${engineBase}/${engine.options.name}/assets/engine-vendor.js`);
+        acc.push(`${engineBase}/${engine.options.name}/assets/engine.js`);
+        acc.push(`${engineBase}/${engine.options.name}/config/environment.js`);
+        return acc;
+      }, [])
+    }
+
+    var outputPaths = this.app.options.outputPaths;
+
+    // Create the string replace patterns for the various application files
+    // We will replace require and define function call by their pig-latin version
+    var data = {
+      files: [
+        new RegExp(path.parse(outputPaths.app.js).name + '(.*js)'),
+        new RegExp(path.parse(outputPaths.vendor.js).name + '(.*js)'),
+        new RegExp(path.parse(outputPaths.tests.js).name + '(.*js)'),
+        'tests/index.html',
+        new RegExp(path.parse(outputPaths.testSupport.js.testSupport).name + '(.*js)')
+      ],
+      patterns: [{
+        match: /([^A-Za-z0-9_#']|^|["])define(?=\W|["]|$)/g,
+        replacement: '$1efineday'
+      }, {
+        match: /(\W|^|["])require(?=\W|["]|$)/g,
+        replacement: '$1equireray'
+      }]
+    };
+    // include the engine files...
+    data.files = data.files.concat(engineFilesToAdd);
+
+    var dataTree = stringReplace(tree, data);
+
+    // Special case for the test loader that is doing some funky stuff with require
+    // We basically decided to pig latin all require cases.
+    var testLoader = {
+      files: [
+        new RegExp(path.parse(outputPaths.testSupport.js.testLoader).name + '(.*js)')
+      ],
+      patterns: [{
+        match: /(\W|^|["])define(\W|["]|$)/g,
+        replacement: '$1efineday$2'
+      }, {
+        match: /require([.])/g,
+        replacement: 'equireray.'
+      }, {
+        match: /require([(])/g,
+        replacement: 'equireray('
+      }, {
+        match: /require([ ])/g,
+        replacement: 'equireray '
+      }, {
+        match: /requirejs([.])/g,
+        replacement: 'equireray.'
+      }]
+    };
+
+    return stringReplace(dataTree, testLoader);
   }
 };
