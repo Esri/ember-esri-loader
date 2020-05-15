@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Changed
+- go back to using regex to replace `require` and `define`
+
 ## 3.0.3
 ### Fixed
 - fix and document excludePaths build option
