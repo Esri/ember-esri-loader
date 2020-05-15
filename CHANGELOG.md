@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
+### Fixed
+- enable this to work w/ ember-cli-stencil
 
 ## 3.0.4
 ### Changed
