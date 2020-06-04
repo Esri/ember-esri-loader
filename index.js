@@ -77,7 +77,7 @@ module.exports = {
     var outputPaths = this.app.options.outputPaths;
 
     // Create the string replace patterns for the various application files
-    // We will replace require and define function call by their pig-latin version
+    // We will replace require and define function call by a name that more clearly describes its purpose
     var data = {
       files: [
         new RegExp(path.parse(outputPaths.app.js).name + '(.*js)'),
@@ -102,7 +102,7 @@ module.exports = {
     var dataTree = stringReplace(tree, data);
 
     // Special case for the test loader that is doing some funky stuff with require
-    // We basically decided to pig latin all require cases.
+    // The names are replaced with something that clearly describes their purpose.   
     var testLoader = {
       files: [
         new RegExp(path.parse(outputPaths.testSupport.js.testLoader).name + '(.*js)')
