@@ -90,10 +90,10 @@ module.exports = {
       // for now, this one can be tested here: https://regexr.com/54mq6
       patterns: [{
         match: /([^A-Za-z0-9_#']|^|["])(?<!customElements\.)define(?=\W|["]|$)/g,
-        replacement: '$1efineday'
+        replacement: '$1testLoaderDefine'
       }, {
         match: /(\W|^|["])require(?=\W|["]|$)/g,
-        replacement: '$1equireray'
+        replacement: '$1testLoaderRequire'
       }]
     };
     // include the engine files...
@@ -109,19 +109,19 @@ module.exports = {
       ],
       patterns: [{
         match: /(\W|^|["])(?<!customElements\.)define(\W|["]|$)/g,
-        replacement: '$1efineday$2'
+        replacement: '$1testLoaderDefine$2'
       }, {
         match: /require([.])/g,
-        replacement: 'equireray.'
+        replacement: 'testLoaderRequire.'
       }, {
         match: /require([(])/g,
-        replacement: 'equireray('
+        replacement: 'testLoaderRequire('
       }, {
         match: /require([ ])/g,
-        replacement: 'equireray '
+        replacement: 'testLoaderRequire '
       }, {
         match: /requirejs([.])/g,
-        replacement: 'equireray.'
+        replacement: 'testLoaderRequire.'
       }]
     };
 
