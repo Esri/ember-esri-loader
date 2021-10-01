@@ -192,7 +192,7 @@ There is no required configuration for this addon, but the following options can
 ```
 let app = new EmberApp(defaults, {
   'ember-esri-loader': {
-    additionalFiles: [ new RegExp('chunk\.app\..*\.js') ]
+    additionalFiles: [ /chunk\.app\..*\.js/ ],
   }
 }
 ```
