@@ -185,6 +185,21 @@ export default Component.extend({
   }
 ```
 
+### Configuration
+
+There is no required configuration for this addon, but the following options can be specified in your ember-cli-build.js file like this:
+
+```
+let app = new EmberApp(defaults, {
+  'ember-esri-loader': {
+    additionalFiles: [ new RegExp('chunk\.app\..*\.js') ]
+  }
+}
+```
+
+Supported options:
+* additionalFiles: _list of strings or RegExp objects, defaults to []_.  Identifies additional files in which we should replace `require` and `define`.  This can be particularly helpful if also using ember-auto-import 2.x, which places its modules in separate js files and attempts to capture the `require` and `define` the app is using.  The configuration example above shows how to support ember-auto-import 2.x with the default webpack configuration.
+
 ## How It Works
 
 This addon is an implementation of the ["Dedicated Loader Module" pattern](http://tomwayson.com/2016/11/27/using-the-arcgis-api-for-javascript-in-applications-built-with-webpack/) for [Ember](http://emberjs.com/). It is a mashup of the ideas from [angular2-esri-loader](https://github.com/tomwayson/angular2-esri-loader) and [ember-cli-amd](https://github.com/Esri/ember-cli-amd). Like angular2-esri-loader, it creates a service that exposes functions that wrap calls to the [esri-loader](https://github.com/tomwayson/esri-loader) library to load the ArcGIS API and it's modules in promises. However, in order to avoid global namespace collisions with [loader.js](https://github.com/ember-cli/loader.js)'s `require()` and `define()` this addon also has to <del>steal</del> borrow from ember-cli-amd the code that finds and replaces those terms with their pig-latin counterparts in the build output. However unlike ember-cli-amd, it does **not** inject the ArcGIS for JavaScript in the page, nor does it use the ArcGIS API's Dojo loader to load the entire app.
