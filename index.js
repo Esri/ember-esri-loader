@@ -23,9 +23,10 @@ module.exports = {
   name: require('./package').name,
 
   // support "import esriLoader from 'esri-loader';" syntax
-  included() {
+  included(app) {
     this._super.included.apply(this, arguments);
     this.import('vendor/shims/esri-loader.js');
+    this.options = Object.assign({ additionalFiles: [] }, app.options[this.moduleName()])
   },
 
   // copy UMD builds of esri-loader to public tree
@@ -98,6 +99,9 @@ module.exports = {
     };
     // include the engine files...
     data.files = data.files.concat(engineFilesToAdd);
+
+    // include extra files the app has asked us to process
+    data.files = data.files.concat(this.options.additionalFiles)
 
     var dataTree = stringReplace(tree, data);
 
