@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## 4.1.0
+
+### Added
+- Add additionalFiles option to support ember-auto-import 2.x
+
 ## 4.0.0
 ### Breaking
 - requires node v8.10+
