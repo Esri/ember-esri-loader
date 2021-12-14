@@ -19,7 +19,7 @@ export default Mixin.create({
     const module = this._modules[moduleName];
     if (!module) {
       // the module has not been loaded yet
-      throw new Error(`${this.get('moduleNotLoadedErrorMessage')}: ${moduleName}`);
+      throw new Error(`${this.moduleNotLoadedErrorMessage}: ${moduleName}`);
     }
     return module;
   },

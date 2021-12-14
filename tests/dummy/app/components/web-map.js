@@ -9,8 +9,8 @@ export default Component.extend({
   didInsertElement () {
     this._super(...arguments);
     // load the map modules
-    this.get('esriLoader').loadModules(['esri/views/MapView', 'esri/WebMap']).then(modules => {
-      if (this.get('isDestroyed') || this.get('isDestroying')) {
+    this.esriLoader.loadModules(['esri/views/MapView', 'esri/WebMap']).then(modules => {
+      if (this.isDestroyed || this.isDestroying) {
         return;
       }
       const [MapView, WebMap] = modules;
