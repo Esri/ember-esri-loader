@@ -2,7 +2,7 @@
 
   {{!-- JSAPI load status --}}
   <p style="text-align: right">The ArcGIS API for JavaScript
-    is: <strong>{{#unless jsapiLoaded }}<span class="text-muted">Loading...</span>{{else}}<span class="text-success">Loaded</span>{{/unless}}</strong></p>
+    is: <strong>{{#unless this.jsapiLoaded }}<span class="text-muted">Loading...</span>{{else}}<span class="text-success">Loaded</span>{{/unless}}</strong></p>
 
   {{!-- navbar --}}
   <nav class="navbar navbar-default">
@@ -18,9 +18,9 @@
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-          <li>{{#link-to "application"}}Home{{/link-to}}</li>
-          <li>{{#link-to "map"}}Map View{{/link-to}}</li>
-          <li>{{#link-to "scene"}}Scene View{{/link-to}}</li>
+          <li><LinkTo @route="application">Home</LinkTo></li>
+          <li><LinkTo @route="map">Map View</LinkTo></li>
+          <li><LinkTo @route="scene">Scene View</LinkTo></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li><a href="https://github.com/Esri/ember-esri-loader" target="_blank">GitHub</a></li>

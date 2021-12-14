@@ -1,3 +1,4 @@
+/* eslint-disable ember/no-new-mixins */
 import EmberObject from '@ember/object';
 import EsriModuleCacheMixin from 'ember-esri-loader/mixins/esri-module-cache';
 import { module } from 'qunit';
