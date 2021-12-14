@@ -2,7 +2,7 @@
 
 const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
-module.exports = function(defaults) {
+module.exports = function (defaults) {
   let app = new EmberAddon(defaults, {
     autoImport: {
       // ember-esri-loader loads esri-loader with a script tag to prevent it from being rewritten to replace "require"

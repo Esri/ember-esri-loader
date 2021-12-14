@@ -11,6 +11,8 @@
   limitations under the License.
 */
 
+/* eslint-disable ember/no-classic-classes */
+
 import { run } from '@ember/runloop';
 import { Promise as EmberPromise } from 'rsvp';
 import Service from '@ember/service';
