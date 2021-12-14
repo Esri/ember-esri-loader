@@ -9,6 +9,14 @@ An [Ember addon](https://ember-cli.com/extending/) that wraps the [esri-loader](
 
 See the [esri-loader README](https://github.com/Esri/esri-loader#why-is-this-needed) for more information on why this is needed.
 
+
+Compatibility
+------------------------------------------------------------------------------
+
+* Ember.js v2.18 or above
+* Ember CLI v2.13 or above
+
+
 Installation
 ------------------------------------------------------------------------------
 
@@ -249,7 +257,6 @@ The [dummy application for this addon](http://ember-esri-loader.surge.sh/) demon
 * `ember serve`
 * Visit the dummy application at [http://localhost:4200](http://localhost:4200).
 
-For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
 
 ## Issues
 
