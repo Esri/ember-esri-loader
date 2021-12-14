@@ -89,23 +89,22 @@ The above code will lazy load the ArcGIS API for JavaScript the first time `load
 Alternatively, if you have good reason to believe that the user is going to transition to a map route, you may want to start pre-loading the ArcGIS API as soon as possible w/o blocking template rendering. You can add the following to the application route:
 
 ```js
-// app/routes/application.js
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 
-export default Ember.Route.extend({
-  esriLoader: Ember.inject.service('esri-loader'),
+export default class ApplicationRoute extends Route {
+  @service esriLoader
 
-  renderTemplate: function () {
-    // render the template as normal
-    this._super(...arguments);
-    // then preload the JSAPI
-    // NOTE: to use the latest 4.x release don't pass any arguments to loadScript()
-    this.get('esriLoader').loadScript()
-    .catch(err => {
-      // do something with the error
-    });
+  beforeModel() {
+    // Preload the JS & CSS for the latest (4.x) version of the JSAPI
+    this.esriLoader.loadScript({ css: true })
+      .catch(err => {
+        // TODO: better way of showing error
+        window.alert(err.message || err);
+      });
   }
-});
+
+}
 ```
 
 Now you can use `loadModules()` in components to [create maps](https://github.com/Esri/ember-esri-loader/blob/master/tests/dummy/app/components/web-map.js) or [3D scenes](https://github.com/Esri/ember-esri-loader/blob/master/tests/dummy/app/components/scene-view.js). Also, if you need to, you can [use `isLoaded()` anywhere in your application to find out whether or not the ArcGIS API has finished loading](https://github.com/Esri/ember-esri-loader/blob/master/tests/dummy/app/controllers/application.js).
