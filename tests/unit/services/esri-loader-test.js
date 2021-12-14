@@ -1,15 +1,19 @@
 import { resolve } from 'rsvp';
-import { module } from 'qunit';
+import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import test from 'ember-sinon-qunit/test-support/test';
 import esriLoader from 'esri-loader';
+import sinon from 'sinon'
 
 module('Unit | Service | esri loader', function(hooks) {
   setupTest(hooks);
 
+  hooks.afterEach(function() {
+    sinon.restore()
+  })
+
   test('isLoaded', function (assert) {
     let service = this.owner.lookup('service:esri-loader');
-    const stub = this.stub(esriLoader, 'isLoaded');
+    const stub = sinon.stub(esriLoader, 'isLoaded');
     service.get('isLoaded');
     assert.ok(stub.calledOnce, 'isLoaded was called once');
   });
@@ -17,7 +21,7 @@ module('Unit | Service | esri loader', function(hooks) {
   test('loadScript', function (assert) {
     assert.expect(2);
     let service = this.owner.lookup('service:esri-loader');
-    const stub = this.stub(esriLoader, 'loadScript').callsFake(function (options) {
+    const stub = sinon.stub(esriLoader, 'loadScript').callsFake(function (options) {
       assert.notOk(options, 'should not pass options');
       return resolve();
     });
@@ -32,7 +36,7 @@ module('Unit | Service | esri loader', function(hooks) {
     const options = {
       url: 'https://js.arcgis.com/3.20'
     };
-    const stub = this.stub(esriLoader, 'loadScript').callsFake(function (opts) {
+    const stub = sinon.stub(esriLoader, 'loadScript').callsFake(function (opts) {
       assert.equal(opts, options, 'should have passed in options');
       return resolve();
     });
@@ -45,7 +49,7 @@ module('Unit | Service | esri loader', function(hooks) {
     assert.expect(3);
     let service = this.owner.lookup('service:esri-loader');
     const moduleNames = ['esri/map', 'esri/layers/VectorTileLayer'];
-    const stub = this.stub(esriLoader, 'loadModules').callsFake(function (modNames, opts) {
+    const stub = sinon.stub(esriLoader, 'loadModules').callsFake(function (modNames, opts) {
       assert.equal(modNames, moduleNames, 'should pass same modules names');
       assert.notOk(opts, 'should not pass options');
       return resolve();
@@ -62,7 +66,7 @@ module('Unit | Service | esri loader', function(hooks) {
     const options = {
       url: 'https://js.arcgis.com/3.20'
     };
-    const stub = this.stub(esriLoader, 'loadModules').callsFake(function (modNames, opts) {
+    const stub = sinon.stub(esriLoader, 'loadModules').callsFake(function (modNames, opts) {
       assert.equal(modNames, moduleNames, 'should pass same modules names');
       assert.equal(opts, options, 'should have passed in options');
       return resolve();
@@ -76,7 +80,7 @@ module('Unit | Service | esri loader', function(hooks) {
     assert.expect(2);
     let service = this.owner.lookup('service:esri-loader');
     const url = 'https://js.arcgis.com/4.7/esri/css/main.css';
-    const stub = this.stub(esriLoader, 'loadCss').callsFake(function (cssUrl) {
+    const stub = sinon.stub(esriLoader, 'loadCss').callsFake(function (cssUrl) {
       assert.equal(cssUrl, url, 'should pass same url');
       return resolve();
     });

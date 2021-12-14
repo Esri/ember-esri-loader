@@ -2,11 +2,16 @@
 /* eslint-disable ember/no-mixins */
 import EmberObject from '@ember/object';
 import EsriModuleCacheMixin from 'ember-esri-loader/mixins/esri-module-cache';
-import { module } from 'qunit';
-import test from 'ember-sinon-qunit/test-support/test';
+import { module, test } from 'qunit';
+import sinon from 'sinon';
 
 
-module('Unit | Mixin | esri module cache', function() {
+module('Unit | Mixin | esri module cache', function(hooks) {
+
+  hooks.afterEach(function() {
+    sinon.restore()
+  })
+  
   test('when the module has not yet been cached', function(assert) {
     let EsriModuleCacheObject = EmberObject.extend(EsriModuleCacheMixin);
     let subject = EsriModuleCacheObject.create();
@@ -34,7 +39,7 @@ module('Unit | Mixin | esri module cache', function() {
     };
     let EsriModuleCacheObject = EmberObject.extend(EsriModuleCacheMixin);
     let subject = EsriModuleCacheObject.create();
-    let SimpleFillSymbol = this.spy();
+    let SimpleFillSymbol = sinon.spy();
     // emulate loading the symbol modules
     subject.cacheModules({
       SimpleFillSymbol
