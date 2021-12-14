@@ -41,7 +41,7 @@ export default Component.extend({
         //   layer.visible = false;
         // });
       })
-      .otherwise((err) => {
+      .catch((err) => {
         // A rejected view indicates a fatal error making it unable to display,
         // this usually means that WebGL is not available, or too old.
         /* eslint-disable no-console */
