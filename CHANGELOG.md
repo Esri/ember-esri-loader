@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Breaking
+- Requires node v12+
+### Changes
+- Updated to ember 3.28 and fixed deprecations introduced in the 3.x cycle.
+
 ## 4.1.0
 
 ### Added
