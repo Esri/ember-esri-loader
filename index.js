@@ -26,7 +26,7 @@ module.exports = {
   included(app) {
     this._super.included.apply(this, arguments);
     this.import('vendor/shims/esri-loader.js');
-    this.options = Object.assign({ additionalFiles: [] }, app.options[this.moduleName()])
+    this.addonOptions = Object.assign({ additionalFiles: [] }, app.options[this.moduleName()])
   },
 
   // copy UMD builds of esri-loader to public tree
@@ -101,7 +101,7 @@ module.exports = {
     data.files = data.files.concat(engineFilesToAdd);
 
     // include extra files the app has asked us to process
-    data.files = data.files.concat(this.options.additionalFiles)
+    data.files = data.files.concat(this.addonOptions.additionalFiles)
 
     var dataTree = stringReplace(tree, data);
 

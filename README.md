@@ -9,6 +9,15 @@ An [Ember addon](https://ember-cli.com/extending/) that wraps the [esri-loader](
 
 See the [esri-loader README](https://github.com/Esri/esri-loader#why-is-this-needed) for more information on why this is needed.
 
+
+Compatibility
+------------------------------------------------------------------------------
+
+* Ember.js v3.20 or above
+* Ember CLI v3.20 or above
+* Node.js v12 or above
+
+
 Installation
 ------------------------------------------------------------------------------
 
@@ -80,23 +89,22 @@ The above code will lazy load the ArcGIS API for JavaScript the first time `load
 Alternatively, if you have good reason to believe that the user is going to transition to a map route, you may want to start pre-loading the ArcGIS API as soon as possible w/o blocking template rendering. You can add the following to the application route:
 
 ```js
-// app/routes/application.js
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 
-export default Ember.Route.extend({
-  esriLoader: Ember.inject.service('esri-loader'),
+export default class ApplicationRoute extends Route {
+  @service esriLoader
 
-  renderTemplate: function () {
-    // render the template as normal
-    this._super(...arguments);
-    // then preload the JSAPI
-    // NOTE: to use the latest 4.x release don't pass any arguments to loadScript()
-    this.get('esriLoader').loadScript()
-    .catch(err => {
-      // do something with the error
-    });
+  beforeModel() {
+    // Preload the JS & CSS for the latest (4.x) version of the JSAPI
+    this.esriLoader.loadScript({ css: true })
+      .catch(err => {
+        // TODO: better way of showing error
+        window.alert(err.message || err);
+      });
   }
-});
+
+}
 ```
 
 Now you can use `loadModules()` in components to [create maps](https://github.com/Esri/ember-esri-loader/blob/master/tests/dummy/app/components/web-map.js) or [3D scenes](https://github.com/Esri/ember-esri-loader/blob/master/tests/dummy/app/components/scene-view.js). Also, if you need to, you can [use `isLoaded()` anywhere in your application to find out whether or not the ArcGIS API has finished loading](https://github.com/Esri/ember-esri-loader/blob/master/tests/dummy/app/controllers/application.js).
@@ -249,7 +257,6 @@ The [dummy application for this addon](http://ember-esri-loader.surge.sh/) demon
 * `ember serve`
 * Visit the dummy application at [http://localhost:4200](http://localhost:4200).
 
-For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
 
 ## Issues
 

@@ -1,3 +1,4 @@
+/* eslint-disable ember/no-new-mixins */
 import Mixin from '@ember/object/mixin';
 
 export default Mixin.create({
@@ -18,7 +19,7 @@ export default Mixin.create({
     const module = this._modules[moduleName];
     if (!module) {
       // the module has not been loaded yet
-      throw new Error(`${this.get('moduleNotLoadedErrorMessage')}: ${moduleName}`);
+      throw new Error(`${this.moduleNotLoadedErrorMessage}: ${moduleName}`);
     }
     return module;
   },
