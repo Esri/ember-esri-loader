@@ -195,7 +195,7 @@ export default Component.extend({
 
 ### Configuration
 
-There is no required configuration for this addon, but the following options can be specified in your ember-cli-build.js file like this:
+If you are using ember-auto-import v2.x you will need to add the following options in your ember-cli-build.js file:
 
 ```
 let app = new EmberApp(defaults, {
@@ -206,7 +206,8 @@ let app = new EmberApp(defaults, {
 ```
 
 Supported options:
-* additionalFiles: _list of strings or RegExp objects, defaults to []_.  Identifies additional files in which we should replace `require` and `define`.  This can be particularly helpful if also using ember-auto-import 2.x, which places its modules in separate js files and attempts to capture the `require` and `define` the app is using.  The configuration example above shows how to support ember-auto-import 2.x with the default webpack configuration.
+
+* additionalFiles: _list of strings or RegExp objects, defaults to []_.  Identifies additional files in which we should replace `require` and `define`.  This can be particularly helpful if also using ember-auto-import 2.x, which places its modules in separate js files and attempts to capture the `require` and `define` the app is using.  The configuration example above shows how to support ember-auto-import 2.x with the default webpack configuration, but you can add additional globs as necessary.
 
 ## How It Works
 
