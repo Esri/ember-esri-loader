@@ -195,19 +195,30 @@ export default Component.extend({
 
 ### Configuration
 
-If you are using ember-auto-import v2.x you will need to add the following options in your ember-cli-build.js file:
+#### Options
+
+* additionalFiles: _list of strings or RegExp objects, defaults to []_.  Identifies additional files in which we should replace `require` and `define`.  This can be particularly helpful if also using ember-auto-import 2.x, which places its modules in separate js files and attempts to capture the `require` and `define` the app is using.  The configuration example above shows how to support ember-auto-import 2.x with the default webpack configuration, but you can add additional globs as necessary.
+
+#### Using with ember-auto-import
+
+If you are using [ember-auto-import](https://github.com/ef4/ember-auto-import) you will have to [configure ember-auto-import](https://github.com/ef4/ember-auto-import#customizing-build-behavior) to `exclude` any imports from esri-loader. Furthermore, if you are using ember-auto-import v2.x you will need to [configure ember-esri-loader](#options) to process the ember-auto-import output using `additionalFiles`. To do so, add the following options in your ember-cli-build.js file:
 
 ```
+// ember-cli-build.js
+
 let app = new EmberApp(defaults, {
+  autoImport: {
+    // ember-esri-loader loads esri-loader with a script tag to prevent it from being rewritten to replace "require"
+    // and "define" in the build pipeline.  We need to exclude it from ember-auto-import so that we don't pull it
+    // back into the build pipeline when we import it ourselves.
+    exclude: [ 'esri-loader' ],
+  }
   'ember-esri-loader': {
+    // this is only needed for ember-auto-import 2.x
     additionalFiles: [ /chunk\.app\..*\.js/ ],
   }
 }
 ```
-
-Supported options:
-
-* additionalFiles: _list of strings or RegExp objects, defaults to []_.  Identifies additional files in which we should replace `require` and `define`.  This can be particularly helpful if also using ember-auto-import 2.x, which places its modules in separate js files and attempts to capture the `require` and `define` the app is using.  The configuration example above shows how to support ember-auto-import 2.x with the default webpack configuration, but you can add additional globs as necessary.
 
 ## How It Works
 
